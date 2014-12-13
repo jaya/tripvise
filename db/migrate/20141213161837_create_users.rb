@@ -1,12 +1,12 @@
-class CreateUsers < ActiveRecord::Migration
+class CreausereUsers < ActiveRecord::Migration
   def change
-    create_table :users do |t|
-      t.string :name
-      t.string :fb_id
-      t.string :fb_token
-      t.string :email
+    create_table :users do |user|
+      user.string :name
+      user.string :fb_id
+      user.string :fb_token
+      user.string :email
 
-      t.timestamps
+      user.timestamps
     end
   end
 end
