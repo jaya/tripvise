@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe User, :type => :model do
+RSpec.describe User, type: :model do
   context 'when data is invalid' do
     it { expect(build(:user, fb_id: nil)).to_not be_valid }
     it { expect(build(:user, fb_token: nil)).to_not be_valid }
