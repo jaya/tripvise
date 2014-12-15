@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :user, class: User do
+  factory :user do
     name 'Angelina Jolie'
     fb_id 'ASD1231'
     fb_token 'A312D1'
@@ -9,6 +9,13 @@ FactoryGirl.define do
       name 'Brad Pitt'
       fb_id 'ASDAS12312'
       fb_token 'DKASOPD12312'
+    end
+
+    factory :recommender do
+      name 'Will Smith'
+      fb_id 'UHIAS123'
+      fb_token '1021KJ'
+      email 'will@mib.com'
     end
 
     factory :invalid_user do

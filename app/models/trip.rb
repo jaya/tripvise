@@ -1,4 +1,5 @@
 class Trip < ActiveRecord::Base
+  has_many :recommendations
   belongs_to :user
   belongs_to :destination
 
