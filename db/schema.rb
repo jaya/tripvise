@@ -31,11 +31,6 @@ ActiveRecord::Schema.define(version: 20141214212857) do
     t.datetime "updated_at"
   end
 
-  create_table "table_users_trips", force: true do |t|
-    t.integer "user_id"
-    t.integer "trip_id"
-  end
-
   create_table "trips", force: true do |t|
     t.datetime "start"
     t.datetime "end"
@@ -43,7 +38,6 @@ ActiveRecord::Schema.define(version: 20141214212857) do
     t.datetime "updated_at"
     t.integer  "destination_id"
     t.integer  "user_id"
-  end
   end
 
   create_table "users", force: true do |t|
