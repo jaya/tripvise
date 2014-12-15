@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  def index
+    
+  end
+
   def create
     user = User.find_or_initialize_by(email: params[:user][:email])
 
