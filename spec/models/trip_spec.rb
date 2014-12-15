@@ -11,7 +11,10 @@ RSpec.describe Trip, type: :model do
     it { expect(build(:invalid_trip)).to_not be_valid }
 
     context 'when end date is greater than start date' do
-      it { expect(trip.start = '2014-12-20 12:33:28').to_not be_valid }
+      it do
+        trip.start = '2014-12-20 12:33:28'
+        expect(trip).to_not be_valid
+      end
     end
   end
 end

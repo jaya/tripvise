@@ -7,7 +7,7 @@ RSpec.describe TripsController, type: :controller do
     end
 
     context 'with valid data' do
-      let(:trip) { attributes_for(:trip) }
+      let(:trip) { attributes_for(:trip_json) }
 
       it 'responds with 200' do
         expect(response).to have_http_status :ok
@@ -15,13 +15,13 @@ RSpec.describe TripsController, type: :controller do
 
       it 'creates a trip' do
         expect do
-          post :create, trip: attributes_for(:trip)
+          post :create, trip: attributes_for(:trip_json)
         end.to change(Trip, :count).by(1)
       end
     end
 
     context 'with invalid data' do
-      let(:trip) { attributes_for(:invalid_trip) }
+      let(:trip) { attributes_for(:invalid_trip, destination: attributes_for(:destination)) }
 
       it 'responds with 400' do
         expect(response).to have_http_status :bad_request
