@@ -17,7 +17,7 @@ class TripsController < ApplicationController
   end
 
   def base_params
-    trip_params.permit(:start, :end)
+    trip_params.permit(:start, :end, :user_id)
   end
 
   def destination_params

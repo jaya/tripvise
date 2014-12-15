@@ -3,6 +3,7 @@ FactoryGirl.define do
     start '2014-12-14 12:33:28'
     self.end '2014-12-14 12:33:28'
     destination { build(:destination) }
+    user
 
     factory :trip_json do
       destination { attributes_for(:destination) }
@@ -12,6 +13,7 @@ FactoryGirl.define do
       start nil
       self.end nil
       destination nil
+      user nil
     end
   end
 end

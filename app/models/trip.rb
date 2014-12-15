@@ -1,5 +1,5 @@
 class Trip < ActiveRecord::Base
-  belongs_to :users
+  belongs_to :user
   belongs_to :destination
 
   validates_presence_of :start, :end
