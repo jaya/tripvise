@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :trip do
     start '2014-12-14 12:33:28'
     self.end '2014-12-14 12:33:28'
+    code 'ABC12'
     destination { build(:destination) }
     user
 
