@@ -10,6 +10,8 @@ gem 'pg'
 
 gem 'active_model_serializers'
 
+gem 'image_suckr'
+
 group :development do
   gem 'rubocop', require: false
   gem 'overcommit'
