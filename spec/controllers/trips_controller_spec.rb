@@ -54,7 +54,10 @@ RSpec.describe TripsController, type: :controller do
     end
 
     context 'with invalid data' do
-      let(:trip) { attributes_for(:invalid_trip, destination: attributes_for(:destination)) }
+      let(:trip) do
+        attributes_for(:invalid_trip, destination: attributes_for(:destination),
+                                      recommendation_type: attributes_for(:recommendation_type))
+      end
 
       it 'responds with 400' do
         expect(response).to have_http_status :bad_request
