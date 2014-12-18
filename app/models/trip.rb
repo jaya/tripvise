@@ -19,7 +19,7 @@ class Trip < ActiveRecord::Base
 
   def generate_token
     self.code = loop do
-      random_token = SecureRandom.urlsafe_base64(5, false).upcase
+      random_token = SecureRandom.hex.upcase[0..5]
       break random_token unless Trip.exists?(code: random_token)
     end
   end

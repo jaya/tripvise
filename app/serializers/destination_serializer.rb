@@ -4,6 +4,6 @@ class DestinationSerializer < ActiveModel::Serializer
   def location_image
     @suckr ||= ImageSuckr::GoogleSuckr.new
     @suckr.get_image_url('q' => object.full_qualified_name, \
-                         'imgsz' => 'large', 'imgType' => 'photo')
+                         'imgsz' => 'xlarge', 'imgType' => 'photo')
   end
 end
