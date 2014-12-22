@@ -38,6 +38,7 @@ RSpec.describe TripsController, type: :controller do
     before do
       post :create, format: :json, trip: trip
     end
+    let(:trip) { Trip.first }
 
     context 'with valid data' do
       let(:trip) { attributes_for(:trip_json) }
@@ -50,6 +51,12 @@ RSpec.describe TripsController, type: :controller do
         expect do
           post :create, trip: attributes_for(:trip_json)
         end.to change(Trip, :count).by(1)
+      end
+
+      it 'has a picture for the location' do
+        expect do
+          trip.destination.picture.to_not be_nil
+        end
       end
     end
 
