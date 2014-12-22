@@ -7,8 +7,8 @@ class RecommendationsController < ApplicationController
     else
       render nothing: true, status: :bad_request
     end
-
   end
+
   private
 
   def recommendation_params

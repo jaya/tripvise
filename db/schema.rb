@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141215013338) do
+ActiveRecord::Schema.define(version: 20141222192803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,12 +23,19 @@ ActiveRecord::Schema.define(version: 20141215013338) do
     t.string   "full_qualified_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "picture"
   end
 
   create_table "places", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "recommendation_types", force: true do |t|
+    t.boolean "hotels"
+    t.boolean "attractions"
+    t.boolean "restaurants"
   end
 
   create_table "recommendations", force: true do |t|
@@ -42,6 +49,11 @@ ActiveRecord::Schema.define(version: 20141215013338) do
     t.datetime "updated_at"
   end
 
+  create_table "table_users_trips", force: true do |t|
+    t.integer "user_id"
+    t.integer "trip_id"
+  end
+
   create_table "trips", force: true do |t|
     t.datetime "start"
     t.datetime "end"
@@ -49,6 +61,13 @@ ActiveRecord::Schema.define(version: 20141215013338) do
     t.datetime "updated_at"
     t.integer  "destination_id"
     t.integer  "user_id"
+    t.string   "code"
+    t.integer  "recommendation_type_id"
+  end
+
+  create_table "user_trips", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

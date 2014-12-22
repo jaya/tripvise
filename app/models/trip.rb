@@ -1,7 +1,9 @@
 class Trip < ActiveRecord::Base
-  has_many :recommendations
+  before_create :generate_token
+
   belongs_to :user
   belongs_to :destination
+  belongs_to :recommendation_type
 
   validates_presence_of :start, :end
   validate :start_date_cannot_be_greater_than_end
@@ -14,5 +16,12 @@ class Trip < ActiveRecord::Base
 
   def verify_blank
     !start.blank? && !self.end.blank?
+  end
+
+  def generate_token
+    self.code = loop do
+      random_token = SecureRandom.hex.upcase[0..5]
+      break random_token unless Trip.exists?(code: random_token)
+    end
   end
 end
