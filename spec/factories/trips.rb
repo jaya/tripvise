@@ -10,6 +10,7 @@ FactoryGirl.define do
     factory :trip_json do
       destination { attributes_for(:destination) }
       recommendation_type { attributes_for(:recommendation_type) }
+      user_id { create(:user).id }
     end
 
     factory :invalid_trip do

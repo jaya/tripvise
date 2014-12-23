@@ -5,7 +5,7 @@ class Trip < ActiveRecord::Base
   belongs_to :destination
   belongs_to :recommendation_type
 
-  validates_presence_of :start, :end
+  validates_presence_of :start, :end, :user_id
   validate :start_date_cannot_be_greater_than_end
 
   def start_date_cannot_be_greater_than_end

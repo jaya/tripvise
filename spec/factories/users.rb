@@ -3,7 +3,7 @@ FactoryGirl.define do
     name 'Angelina Jolie'
     fb_id 'ASD1231'
     fb_token 'A312D1'
-    email 'angelina@jolie.com'
+    email Faker::Internet.email
     profile_picture 'http://1.bp.blogspot.com/-D8sY8_vDGl4/T5KdkqmPg4I' \
                     '/AAAAAAAAAUI/b15_zkP-4nw/s1600/Kitten-Wallpaper-3.jpeg'
 
@@ -17,7 +17,7 @@ FactoryGirl.define do
       name 'Will Smith'
       fb_id 'UHIAS123'
       fb_token '1021KJ'
-      email 'will@mib.com'
+      email Faker::Internet.email
     end
 
     factory :invalid_user do

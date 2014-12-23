@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe RecommendationsController, type: :controller do
   describe '#create' do
     before do
+      user = User.find_by(id: recommendation[:recommender_id])
+      request.headers['Authorization'] = user ? user.fb_token : user
       post :create, format: :json, recommendation: recommendation
     end
 

@@ -3,13 +3,16 @@ require 'rails_helper'
 RSpec.describe TripsController, type: :controller do
   describe '#index' do
     before do
+      user = User.find_by(id: user_id)
+      request.headers['Authorization'] = user ? user.fb_token : user
       get :index, requester_id: user_id
     end
     let(:trip_json) { JSON.parse(response.body) }
+    let(:user) { create(:user) }
 
-    context 'with params' do
+    context 'with exising user' do
       let(:user_id) do
-        trip = create(:trip, user_id: create(:user).id)
+        trip = create(:trip, user_id: user.id)
         trip.user_id
       end
 
@@ -22,26 +25,29 @@ RSpec.describe TripsController, type: :controller do
       end
     end
 
-    context 'without params' do
+    context 'without existing user' do
       let(:user_id) do
         trip = create(:trip, user_id: 10_000)
         trip.user_id
       end
 
-      it 'responds with 400' do
-        expect(response).to have_http_status :bad_request
+      it 'responds with 401' do
+        expect(response).to have_http_status :unauthorized
       end
     end
   end
 
   describe '#create' do
     before do
-      post :create, format: :json, trip: trip
+      user = User.find_by(id: trip_json[:user_id])
+      request.headers['Authorization'] = user ? user.fb_token : user
+      post :create, format: :json, trip: trip_json
     end
     let(:trip) { Trip.first }
+    let(:user) { create(:user, email: 'jose@gmail.com') }
 
     context 'with valid data' do
-      let(:trip) { attributes_for(:trip_json) }
+      let(:trip_json) { attributes_for(:trip_json, user_id: user.id) }
 
       it 'responds with 200' do
         expect(response).to have_http_status :ok
@@ -61,13 +67,13 @@ RSpec.describe TripsController, type: :controller do
     end
 
     context 'with invalid data' do
-      let(:trip) do
+      let(:trip_json) do
         attributes_for(:invalid_trip, destination: attributes_for(:destination),
                                       recommendation_type: attributes_for(:recommendation_type))
       end
 
-      it 'responds with 400' do
-        expect(response).to have_http_status :bad_request
+      it 'responds with 401' do
+        expect(response).to have_http_status :unauthorized
       end
     end
   end

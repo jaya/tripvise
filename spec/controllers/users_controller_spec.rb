@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   describe '#create' do
     before do
+      request.headers['Authorization'] = user[:fb_token]
       post :create, format: :json, user: user
     end
     let(:json_response) { JSON.parse(response.body) }
@@ -26,8 +27,8 @@ RSpec.describe UsersController, type: :controller do
     context 'with invalid data' do
       let(:user) { attributes_for(:invalid_user) }
 
-      it 'responds with 400' do
-        expect(response).to have_http_status :bad_request
+      it 'responds with 401' do
+        expect(response).to have_http_status :unauthorized
       end
 
       it 'doens\'t create a user' do
