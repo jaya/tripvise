@@ -14,6 +14,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :fb_id, :fb_token)
+    params.require(:user).permit(:name, :email, :fb_id, :fb_token, :profile_picture)
   end
 end

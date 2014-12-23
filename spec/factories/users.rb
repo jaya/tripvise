@@ -4,6 +4,8 @@ FactoryGirl.define do
     fb_id 'ASD1231'
     fb_token 'A312D1'
     email 'angelina@jolie.com'
+    profile_picture 'http://1.bp.blogspot.com/-D8sY8_vDGl4/T5KdkqmPg4I' \
+                    '/AAAAAAAAAUI/b15_zkP-4nw/s1600/Kitten-Wallpaper-3.jpeg'
 
     factory :duplicated_email do
       name 'Brad Pitt'

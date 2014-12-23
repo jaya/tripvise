@@ -5,6 +5,7 @@ RSpec.describe UsersController, type: :controller do
     before do
       post :create, format: :json, user: user
     end
+    let(:json_response) { JSON.parse(response.body) }
 
     context 'with valid data' do
       let(:user) { attributes_for(:user) }
@@ -15,6 +16,10 @@ RSpec.describe UsersController, type: :controller do
 
       it 'creates a user' do
         expect(User.all).to_not be_empty
+      end
+
+      it 'has a profile profile_picture' do
+        expect(json_response['user']['profile_picture']).to_not be_nil
       end
     end
 
