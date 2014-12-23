@@ -4,7 +4,8 @@ RSpec.describe RecommendationsController, type: :controller do
   describe '#create' do
     before do
       user = User.find_by(id: recommendation[:recommender_id])
-      request.headers['Authorization'] = user ? user.fb_token : user
+      token = ActionController::HttpAuthentication::Token.encode_credentials(user.fb_token)
+      request.headers['HTTP_AUTHORIZATION'] = token
       post :create, format: :json, recommendation: recommendation
     end
 

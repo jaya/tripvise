@@ -1,4 +1,6 @@
 class TripsController < ApplicationController
+  # before_filter :restrict_access
+  #
   def index
     user = User.find_by(id: requester_params)
 
@@ -41,5 +43,11 @@ class TripsController < ApplicationController
 
   def requester_params
     params.permit(:requester_id)['requester_id']
+  end
+
+  def restrict_access
+    authenticate_or_request_with_http_token do |token, _options|
+      User.exists?(fb_token: token)
+    end
   end
 end

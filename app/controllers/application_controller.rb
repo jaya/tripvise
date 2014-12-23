@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include ActionController::Serialization
+  include ActionController::HttpAuthentication::Token::ControllerMethods
 
   before_filter :verify_authorization_token
 
@@ -12,7 +13,7 @@ class ApplicationController < ActionController::API
   end
 
   def authorization_token
-    request.headers['Authorization']
+    request.headers['HTTP_AUTHORIZATION']
   end
 
   def verify_authorization_token
