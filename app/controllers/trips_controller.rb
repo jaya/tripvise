@@ -1,6 +1,6 @@
 class TripsController < ApplicationController
-  # before_filter :restrict_access
-  #
+  before_filter :restrict_access
+
   def index
     user = User.find_by(id: requester_params)
 

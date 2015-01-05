@@ -4,7 +4,9 @@ RSpec.describe TripsController, type: :controller do
   describe '#index' do
     before do
       user = User.find_by(id: user_id)
-      request.headers['Authorization'] = user ? user.fb_token : user
+      fb_token = user ? user.fb_token : nil
+      token = ActionController::HttpAuthentication::Token.encode_credentials(fb_token)
+      request.headers['HTTP_AUTHORIZATION'] = token
       get :index, requester_id: user_id
     end
     let(:trip_json) { JSON.parse(response.body) }
@@ -39,8 +41,9 @@ RSpec.describe TripsController, type: :controller do
 
   describe '#create' do
     before do
-      user = User.find_by(id: trip_json[:user_id])
-      request.headers['Authorization'] = user ? user.fb_token : user
+      fb_token = user ? user.fb_token : nil
+      token = ActionController::HttpAuthentication::Token.encode_credentials(fb_token)
+      request.headers['HTTP_AUTHORIZATION'] = token
       post :create, format: :json, trip: trip_json
     end
     let(:trip) { Trip.first }
@@ -72,8 +75,8 @@ RSpec.describe TripsController, type: :controller do
                                       recommendation_type: attributes_for(:recommendation_type))
       end
 
-      it 'responds with 401' do
-        expect(response).to have_http_status :unauthorized
+      it 'responds with 400' do
+        expect(response).to have_http_status :bad_request
       end
     end
   end
