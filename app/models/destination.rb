@@ -8,7 +8,8 @@ class Destination < ActiveRecord::Base
 
   def add_picture
     @suckr ||= ImageSuckr::GoogleSuckr.new
-    picture = @suckr.get_image_url('q' => full_qualified_name, \
+    query = full_qualified_name + ' wallpaper'
+    picture = @suckr.get_image_url('q' => query, \
                                    'imgsz' => 'xlarge', 'imgType' => 'photo')
     self.picture = picture
   end
