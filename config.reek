@@ -4,6 +4,9 @@ IrresponsibleModule:
 TooManyStatements:
   max_statements: 6
 
+DuplicateMethodCall:
+ max_calls: 3
+
 FeatureEnvy:
   exclude:
   - change
