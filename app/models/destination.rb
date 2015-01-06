@@ -10,6 +10,8 @@ class Destination < ActiveRecord::Base
     @suckr ||= ImageSuckr::GoogleSuckr.new
     query = full_qualified_name + ' wallpaper'
 
+    picture = nil
+
     loop do
       picture = get_picture(query)
       break if
