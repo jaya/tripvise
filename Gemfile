@@ -12,6 +12,8 @@ gem 'active_model_serializers'
 
 gem 'image_suckr'
 
+gem 'mandrill-api'
+
 group :development do
   gem 'rubocop', require: false
   gem 'overcommit'
