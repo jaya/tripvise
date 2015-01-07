@@ -13,6 +13,9 @@ class UsersController < ApplicationController
     end
   end
 
+  def send_email
+  end
+
   private
 
   def user_params
