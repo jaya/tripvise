@@ -1,5 +1,3 @@
-require 'mandrill'
-
 class ApplicationController < ActionController::API
   include ActionController::Serialization
   include ActionController::HttpAuthentication::Token::ControllerMethods
@@ -12,10 +10,6 @@ class ApplicationController < ActionController::API
 
   rescue_from ActiveRecord::RecordInvalid do
     render nothing: true, status: :bad_request
-  end
-
-  def initialize
-    @mandrill = Mandrill::API.new('F9SrPQdt9N24Dy_2lmUd8A')
   end
 
   def authorization_token
