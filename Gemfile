@@ -12,6 +12,8 @@ gem 'active_model_serializers'
 
 gem 'image_suckr'
 
+gem 'figaro', '1.0.0.rc1'
+
 group :development do
   gem 'rubocop', require: false
   gem 'overcommit'

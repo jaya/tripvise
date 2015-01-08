@@ -13,6 +13,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def send_email
+    user = User.find_by(id: params[:id])
+    trip = Trip.find_by(code: params[:trip_code])
+
+    return bad_request unless user && trip
+
+    users = User.where(fb_id: params[:fb_ids])
+
+    UserMailer.recommendations(user, users, trip).deliver
+  end
+
   private
 
   def user_params

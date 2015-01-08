@@ -51,4 +51,35 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
+
+  describe '#send_email' do
+    before do
+      token = 'Token token=' + user[:fb_token]
+      request.headers['Authorization'] = token
+      post :send_email, format: :json, id: user[:id],
+                        trip_code: trip_code,
+                        fb_ids: fb_ids
+    end
+    let(:json_response) { JSON.parse(response.body) }
+
+    context 'with valid data' do
+      let(:user) { create(:user) }
+      let(:trip_code) { create(:trip).code }
+      let(:fb_ids) { [create(:recommender).fb_id] }
+
+      it 'responds with 200' do
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    context 'with invalid data' do
+      let(:user) { create(:user) }
+      let(:trip_code) { 'INVALID' }
+      let(:fb_ids) { nil }
+
+      it 'responds with 400' do
+        expect(response).to have_http_status :bad_request
+      end
+    end
+  end
 end
