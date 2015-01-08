@@ -13,6 +13,7 @@ class UserMailer < ActionMailer::Base
     @sender = sender
     @user = user
     @trip = trip
+    @code = Code.find_by(trip_id: @trip.id)
     mail to: @user.email, subject: "#{@sender.name} wants your recommendation!"
   end
 end

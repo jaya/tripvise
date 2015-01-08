@@ -64,7 +64,7 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with valid data' do
       let(:user) { create(:user) }
-      let(:trip_code) { create(:trip).code }
+      let(:trip_code) { create(:code).code }
       let(:fb_ids) { [create(:recommender).fb_id] }
 
       it 'responds with 200' do
