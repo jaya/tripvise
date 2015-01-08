@@ -14,6 +14,8 @@ gem 'image_suckr'
 
 gem 'mandrill-api'
 
+gem 'figaro', '1.0.0.rc1'
+
 group :development do
   gem 'rubocop', require: false
   gem 'overcommit'
