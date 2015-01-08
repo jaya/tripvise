@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150106134322) do
+ActiveRecord::Schema.define(version: 20150108160823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "codes", force: true do |t|
+    t.string   "code"
+    t.datetime "expiration_date"
+    t.integer  "trip_id"
+  end
 
   create_table "destinations", force: true do |t|
     t.string   "city"
@@ -49,9 +55,7 @@ ActiveRecord::Schema.define(version: 20150106134322) do
     t.datetime "updated_at"
   end
 
-  create_table "table_users_trips", force: true do |t|
-    t.integer "user_id"
-    t.integer "trip_id"
+  create_table "recommenders", force: true do |t|
   end
 
   create_table "trips", force: true do |t|
@@ -63,11 +67,6 @@ ActiveRecord::Schema.define(version: 20150106134322) do
     t.integer  "user_id"
     t.string   "code"
     t.integer  "recommendation_type_id"
-  end
-
-  create_table "user_trips", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
