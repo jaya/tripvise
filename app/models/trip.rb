@@ -5,7 +5,7 @@ class Trip < ActiveRecord::Base
   belongs_to :destination
   belongs_to :recommendation_type
 
-  has_many :codes
+  has_one :code
   has_many :recommenders
 
   validates_presence_of :start, :end, :user_id
