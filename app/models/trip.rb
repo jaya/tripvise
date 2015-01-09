@@ -18,7 +18,7 @@ class Trip < ActiveRecord::Base
   private
 
   def link_to_code
-    Code.create(trip_id: id)
+    Code.create(trip: self)
   end
 
   def period_is_present?
