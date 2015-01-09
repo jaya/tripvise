@@ -1,6 +1,8 @@
 class Code < ActiveRecord::Base
   before_validation :generate_code, :add_expiration_date
 
+  has_many :recommenders
+
   validates_presence_of :code, :expiration_date, :trip_id
 
   private

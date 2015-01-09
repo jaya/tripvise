@@ -25,6 +25,21 @@ class UsersController < ApplicationController
     UserMailer.recommendations(user, users, trip).deliver
   end
 
+  def redeem
+    user = User.find_by(id: params[:id])
+    code = Code.find_by(code: params[:trip_code])
+
+    return bad_request unless code && user
+
+    trip = Trip.find_by(id: code.trip_id)
+
+    recommender = Recommender.new(code: code,
+                                  trip: trip,
+                                  user: user)
+
+    recommender.save ? success : bad_request
+  end
+
   private
 
   def user_params

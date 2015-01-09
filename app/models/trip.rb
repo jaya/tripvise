@@ -6,6 +6,7 @@ class Trip < ActiveRecord::Base
   belongs_to :recommendation_type
 
   has_many :codes
+  has_many :recommenders
 
   validates_presence_of :start, :end, :user_id
   validate :start_date_cannot_be_greater_than_end
