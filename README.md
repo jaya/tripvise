@@ -1,5 +1,7 @@
 [![ReviewNinja](http://app.review.ninja/assets/images/wereviewninja-32.png)](http://app.review.ninja/jaya-apps/tripvise)
 
+![alt tag](http://media.giphy.com/media/WC0DCFkLq4faU/giphy.gif)
+
 #Tripvise
 
 ##Getting Started
