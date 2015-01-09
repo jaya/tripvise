@@ -22,6 +22,6 @@ class Trip < ActiveRecord::Base
   end
 
   def period_is_present?
-    !start.blank? && !self.end.blank?
+    start.present? && self.end.present?
   end
 end
