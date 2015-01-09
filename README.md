@@ -1,30 +1,18 @@
 [![ReviewNinja](http://app.review.ninja/assets/images/wereviewninja-32.png)](http://app.review.ninja/jaya-apps/tripvise)
 
-== README
+#Tripvise
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+##Getting Started
 
-Things you may want to cover:
+run `script/bootstap`
 
-* Ruby version
+configure `config/database.yml` and `config/application.yml` if necessary.
 
-* System dependencies
+##Tests
 
-* Configuration
+If you're setting up this app, you need to do one thing before running the specs:
 
-* Database creation
+`bin/rake db:setup`
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+To run all specs:
+`bin/rspec`
