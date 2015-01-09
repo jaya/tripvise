@@ -1,5 +1,5 @@
 class Trip < ActiveRecord::Base
-  after_save :link_to_code
+  after_create :link_to_code
 
   belongs_to :user
   belongs_to :destination
