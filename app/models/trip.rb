@@ -12,7 +12,7 @@ class Trip < ActiveRecord::Base
   validate :start_date_cannot_be_greater_than_end
 
   def start_date_cannot_be_greater_than_end
-    errors.add(:start, "can't be in the past") if verify_blank && start > self.end
+    errors.add(:start, "can't be in the past") if period_is_present? && start > self.end
   end
 
   private
@@ -21,7 +21,7 @@ class Trip < ActiveRecord::Base
     Code.create(trip_id: id)
   end
 
-  def verify_blank
+  def period_is_present?
     !start.blank? && !self.end.blank?
   end
 end
