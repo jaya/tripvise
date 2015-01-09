@@ -6,7 +6,7 @@ RSpec.describe UserMailer, type: :mailer do
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
     @sender = create(:user)
-    @users = [create(:recommender)]
+    @users = [create(:user_recommender)]
     @trip = create(:trip)
     UserMailer.recommendations(@sender, @users, @trip).deliver
   end

@@ -64,8 +64,8 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with valid data' do
       let(:user) { create(:user) }
-      let(:trip_code) { create(:trip).code }
-      let(:fb_ids) { [create(:recommender).fb_id] }
+      let(:trip_code) { create(:code).code }
+      let(:fb_ids) { [create(:user_recommender).fb_id] }
 
       it 'responds with 200' do
         expect(response).to have_http_status :ok
@@ -76,6 +76,33 @@ RSpec.describe UsersController, type: :controller do
       let(:user) { create(:user) }
       let(:trip_code) { 'INVALID' }
       let(:fb_ids) { nil }
+
+      it 'responds with 400' do
+        expect(response).to have_http_status :bad_request
+      end
+    end
+  end
+
+  describe '#redeem' do
+    before do
+      token = 'Token token=' + user[:fb_token]
+      request.headers['Authorization'] = token
+      post :redeem, format: :json, id: user[:id],
+                    trip_code: trip_code
+    end
+
+    context 'with valid data' do
+      let(:user) { create(:user) }
+      let(:trip_code) { create(:code).code }
+
+      it 'responds with 200' do
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    context 'with invalid data' do
+      let(:user) { create(:user) }
+      let(:trip_code) { 'INVALID' }
 
       it 'responds with 400' do
         expect(response).to have_http_status :bad_request

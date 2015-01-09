@@ -1,3 +1,20 @@
+GIT
+  remote: git://github.com/jkrmr/jazz_hands.git
+  revision: 463e1f57a3dc8f24bc6dd098a79de4f22fa8e80c
+  specs:
+    jazz_hands (1.0.0)
+      awesome_print (~> 1.2)
+      hirb (~> 0.7)
+      pry (~> 0.10)
+      pry-byebug (~> 2.0)
+      pry-coolline (~> 0.2)
+      pry-doc (~> 0.4)
+      pry-git (~> 0.2)
+      pry-rails (~> 0.3)
+      pry-remote (~> 0.1)
+      pry-stack_explorer (~> 0.4)
+      railties (>= 3.0, < 5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -33,11 +50,24 @@ GEM
     ast (2.0.0)
     astrolabe (1.3.0)
       parser (>= 2.2.0.pre.3, < 3.0)
+    awesome_print (1.6.1)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     builder (3.2.2)
+    byebug (3.5.1)
+      columnize (~> 0.8)
+      debugger-linecache (~> 1.2)
+      slop (~> 3.6)
     childprocess (0.5.5)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.0)
+    columnize (0.9.0)
+    coolline (0.5.0)
+      unicode_utils (~> 1.4)
+    debug_inspector (0.0.2)
+    debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
+    diffy (3.0.7)
     erubis (2.7.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -50,7 +80,12 @@ GEM
     figaro (1.0.0.rc1)
       rails (>= 3, < 5)
       thor (~> 0.14)
+    grit (2.5.0)
+      diff-lcs (~> 1.1)
+      mime-types (~> 1.15)
+      posix-spawn (~> 0.3.6)
     hike (1.2.3)
+    hirb (0.7.2)
     i18n (0.6.11)
     image_suckr (0.2.0)
     json (1.8.1)
@@ -68,13 +103,32 @@ GEM
       slop (~> 3.4, >= 3.4.5)
     pg (0.17.1)
     polyglot (0.3.5)
+    posix-spawn (0.3.9)
     powerpack (0.0.9)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (2.0.0)
+      byebug (~> 3.4)
+      pry (~> 0.10)
+    pry-coolline (0.2.5)
+      coolline (~> 0.5)
+    pry-doc (0.6.0)
+      pry (~> 0.9)
+      yard (~> 0.8)
+    pry-git (0.2.3)
+      diffy
+      grit
+      pry (>= 0.9.8)
     pry-rails (0.3.2)
       pry (>= 0.9.10)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
+    pry-stack_explorer (0.4.9.1)
+      binding_of_caller (>= 0.7)
+      pry (>= 0.9.11)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -142,6 +196,8 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    unicode_utils (1.4.0)
+    yard (0.8.7.6)
 
 PLATFORMS
   ruby
@@ -152,6 +208,7 @@ DEPENDENCIES
   faker
   figaro (= 1.0.0.rc1)
   image_suckr
+  jazz_hands!
   overcommit
   pg
   pry-rails

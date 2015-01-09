@@ -25,6 +25,7 @@ group :test, :development do
   gem 'pry-rails'
   gem 'shoulda-matchers'
   gem 'faker'
+  gem 'jazz_hands', github: 'jkrmr/jazz_hands'
 end
 
 # To use ActiveModel has_secure_password

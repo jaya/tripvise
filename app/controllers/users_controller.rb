@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :set_params, only: [:send_email, :redeem]
+
   before_filter :restrict_access, except: [:create]
 
   def create
@@ -14,20 +16,32 @@ class UsersController < ApplicationController
   end
 
   def send_email
-    user = User.find_by(id: params[:id])
-    trip = Trip.find_by(code: params[:trip_code])
-
-    return bad_request unless user && trip
-
     users = User.where(fb_id: params[:fb_ids])
 
-    UserMailer.recommendations(user, users, trip).deliver
+    UserMailer.recommendations(@user, users, @trip).deliver
+  end
+
+  def redeem
+    recommender = Recommender.new(code: @code,
+                                  trip: @trip,
+                                  user: @user)
+
+    recommender.save ? success : bad_request
   end
 
   private
 
   def user_params
     params.require(:user).permit(:name, :email, :fb_id, :fb_token, :profile_picture)
+  end
+
+  def set_params
+    @user = User.find_by(id: params[:id])
+    @code = Code.find_by(code: params[:trip_code])
+
+    return bad_request unless @user && @code
+
+    @trip = @code.trip
   end
 
   def restrict_access

@@ -3,9 +3,13 @@ class TripSerializer < ActiveModel::Serializer
 
   attributes :id, :start, :end,
              :wishlist_count, :recommendation_count,
-             :created_at, :code
+             :created_at, :trip_code
 
   has_one :destination
+
+  def trip_code
+    Code.find_by(trip: object).code
+  end
 
   def wishlist_count
     0

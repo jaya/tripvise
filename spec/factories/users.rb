@@ -13,7 +13,7 @@ FactoryGirl.define do
       fb_token 'DKASOPD12312'
     end
 
-    factory :recommender do
+    factory :user_recommender do
       name 'Will Smith'
       fb_id 'UHIAS123'
       fb_token '1021KJ'
