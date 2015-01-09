@@ -20,6 +20,10 @@ class ApplicationController < ActionController::API
     unauthorized_access if authorization_token.blank?
   end
 
+  def success
+    render nothing: true, status: :ok
+  end
+
   def unauthorized_access
     render nothing: true, status: :unauthorized
   end
