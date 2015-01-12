@@ -19,6 +19,8 @@ class UsersController < ApplicationController
     users = User.where(fb_id: params[:fb_ids])
 
     UserMailer.recommendations(@user, users, @trip).deliver
+
+    render nothing: true, status: :no_content
   end
 
   def redeem
