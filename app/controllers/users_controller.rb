@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     if user.save
       render json: user, status: :ok
     else
-      render nothing: true, status: :bad_request
+      bad_request
     end
   end
 
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
     UserMailer.recommendations(@user, users, @trip).deliver
 
-    render nothing: true, status: :no_content
+    no_content
   end
 
   def redeem

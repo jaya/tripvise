@@ -67,8 +67,8 @@ RSpec.describe UsersController, type: :controller do
       let(:trip_code) { create(:code).code }
       let(:fb_ids) { [create(:user_recommender).fb_id] }
 
-      it 'responds with 200' do
-        expect(response).to have_http_status :ok
+      it 'responds with 204' do
+        expect(response).to have_http_status :no_content
       end
     end
 

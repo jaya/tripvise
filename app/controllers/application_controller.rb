@@ -24,6 +24,10 @@ class ApplicationController < ActionController::API
     render nothing: true, status: :ok
   end
 
+  def no_content
+    render nothing: true, status: :no_content
+  end
+
   def unauthorized_access
     render nothing: true, status: :unauthorized
   end
