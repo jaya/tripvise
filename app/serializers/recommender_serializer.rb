@@ -5,6 +5,6 @@ class RecommenderSerializer < ActiveModel::Serializer
   has_one :user
 
   def recommendations
-    Recommendation.where(trip: object.trip).where(recommender: object.user)
+    Recommendation.where(trip: object.trip, recommender: object.user)
   end
 end
