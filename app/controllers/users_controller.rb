@@ -28,7 +28,7 @@ class UsersController < ApplicationController
                                   trip: @trip,
                                   user: @user)
 
-    recommender.save ? success : bad_request
+    recommender.save ? no_content : bad_request
   end
 
   private

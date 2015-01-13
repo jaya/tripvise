@@ -95,8 +95,8 @@ RSpec.describe UsersController, type: :controller do
       let(:user) { create(:user) }
       let(:trip_code) { create(:code).code }
 
-      it 'responds with 200' do
-        expect(response).to have_http_status :ok
+      it 'responds with 400' do
+        expect(response).to have_http_status :no_content
       end
     end
 
