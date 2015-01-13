@@ -36,9 +36,9 @@ class UsersController < ApplicationController
 
     return bad_request unless user
 
-    recommender = Recommender.find_by(user: user)
+    recommender = Recommender.where(user: user)
 
-    render json: [recommender],
+    render json: recommender,
            root: 'recommendation_requests',
            status: :ok
   end
