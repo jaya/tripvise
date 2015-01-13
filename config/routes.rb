@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :users, except: [:new, :edit]
   post '/users/:id/email', to: 'users#send_email'
   post '/users/:id/redeem', to: 'users#redeem'
+  get '/users/:id/recommendation_requests', to: 'users#recommendation_requests'
 end
