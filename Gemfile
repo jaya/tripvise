@@ -26,6 +26,7 @@ group :test, :development do
   gem 'shoulda-matchers'
   gem 'faker'
   gem 'jazz_hands', github: 'jkrmr/jazz_hands'
+  gem 'simplecov', require: false
 end
 
 # To use ActiveModel has_secure_password
