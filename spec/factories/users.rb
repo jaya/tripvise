@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :user do
+    sequence(:id) { |n| n }
     name 'Angelina Jolie'
     fb_id 'ASD1231'
     fb_token 'A312D1'
@@ -14,6 +15,7 @@ FactoryGirl.define do
     end
 
     factory :user_recommender do
+      sequence(:id) { |n| n }
       name 'Will Smith'
       fb_id 'UHIAS123'
       fb_token '1021KJ'
@@ -21,6 +23,7 @@ FactoryGirl.define do
     end
 
     factory :invalid_user do
+      sequence(:id) { |n| n }
       name nil
       email nil
       fb_id nil

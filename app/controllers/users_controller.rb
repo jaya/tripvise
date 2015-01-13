@@ -31,6 +31,18 @@ class UsersController < ApplicationController
     recommender.save ? no_content : bad_request
   end
 
+  def recommendation_requests
+    user = User.find_by(id: params[:id])
+
+    return bad_request unless user
+
+    recommender = Recommender.find_by(user: user)
+
+    render json: [recommender],
+           root: 'recommendation_requests',
+           status: :ok
+  end
+
   private
 
   def user_params

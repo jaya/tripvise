@@ -109,4 +109,50 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
+
+  describe '#recommendation_requests' do
+    before do
+      trip = create(:trip, user: create(:user_recommender))
+      Recommender.create(
+        trip: trip,
+        user: user,
+        code: Code.find_by(trip: trip)
+      )
+
+      token = 'Token token=' + user[:fb_token]
+      request.headers['Authorization'] = token
+      get :recommendation_requests, format: :json, id: user[:id]
+    end
+    let(:json_response) { JSON.parse(response.body) }
+
+    context 'with valid data' do
+      let(:user) { create(:user) }
+
+      it 'responds with 200' do
+        expect(response).to have_http_status :ok
+      end
+
+      context 'JSON response' do
+        it 'has a list of objects' do
+          expect(json_response).to_not be_nil
+        end
+
+        it 'has an associated user' do
+          expect(json_response['recommendation_requests'].first['user']).to_not be_nil
+        end
+
+        it 'has an associated trip' do
+          expect(json_response['recommendation_requests'].first['trip']).to_not be_nil
+        end
+      end
+    end
+
+    context 'with invalid data' do
+      let(:user) { User.new(id: 123, fb_token: '123123A') }
+
+      it 'responds with 401' do
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+  end
 end
