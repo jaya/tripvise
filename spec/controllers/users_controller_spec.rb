@@ -158,16 +158,19 @@ RSpec.describe UsersController, type: :controller do
 
   describe '#my_recommendations' do
     before do
-      create(:recommendation, recommender: user)
+      create(:recommendation, recommender: user, trip: trip)
+      create(:recommendation, recommender: user, trip: trip)
 
       token = 'Token token=' + user[:fb_token]
       request.headers['Authorization'] = token
-      get :my_recommendations, format: :json, id: user[:id]
+      get :my_recommendations, format: :json, id: user[:id],
+                               trip_id: trip[:id]
     end
     let(:json_response) { JSON.parse(response.body) }
 
     context 'with valid data' do
       let(:user) { create(:user) }
+      let(:trip) { create(:trip, user: user) }
 
       it 'responds with 200' do
         expect(response).to have_http_status :ok
@@ -181,11 +184,18 @@ RSpec.describe UsersController, type: :controller do
         it 'has recommendations' do
           expect(json_response['recommendations']).to_not be_nil
         end
+
+        it 'belongs to the same trip' do
+          json_response['recommendations'].each do |recommendation|
+            expect(recommendation['trip_id']).to eq(trip.id)
+          end
+        end
       end
     end
 
     context 'with invalid data' do
       let(:user) { User.new(id: 123, fb_token: '123123A') }
+      let(:trip) { create(:trip, user: user) }
 
       it 'responds with 401' do
         expect(response).to have_http_status :unauthorized
