@@ -16,6 +16,8 @@ gem 'figaro', '1.0.0.rc1'
 
 gem 'newrelic_rpm'
 
+gem 'codeclimate-test-reporter', group: :test, require: nil
+
 group :development do
   gem 'rubocop', require: false
   gem 'overcommit'
