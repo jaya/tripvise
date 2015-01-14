@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_params, only: [:send_email, :redeem]
-
   before_filter :restrict_access, except: [:create]
+
+  before_action :set_params, only: [:send_email, :redeem]
+  before_action :set_user, only: [:recommendation_requests, :my_recommendations]
 
   def create
     user = User.find_or_initialize_by(email: params[:user][:email])
@@ -32,14 +33,16 @@ class UsersController < ApplicationController
   end
 
   def recommendation_requests
-    user = User.find_by(id: params[:id])
-
-    return bad_request unless user
-
-    recommender = Recommender.where(user: user)
+    recommender = Recommender.where(user: @user)
 
     render json: recommender,
            root: 'recommendation_requests',
+           status: :ok
+  end
+
+  def my_recommendations
+    render json: Recommendation.where(recommender: @user),
+           root: 'recommendations',
            status: :ok
   end
 
@@ -50,12 +53,18 @@ class UsersController < ApplicationController
   end
 
   def set_params
-    @user = User.find_by(id: params[:id])
+    set_user
     @code = Code.find_by(code: params[:trip_code])
 
-    return bad_request unless @user && @code
+    return bad_request unless @code
 
     @trip = @code.trip
+  end
+
+  def set_user
+    @user = User.find_by(id: params[:id])
+
+    return bad_request unless @user
   end
 
   def restrict_access
