@@ -159,7 +159,7 @@ RSpec.describe UsersController, type: :controller do
   describe '#my_recommendations' do
     before do
       create(:recommendation, recommender: user, trip: trip)
-      create(:recommendation, recommender: user, trip: trip)
+      create(:recommendation, recommender: user, trip: create(:trip, user: user))
 
       token = 'Token token=' + user[:fb_token]
       request.headers['Authorization'] = token
@@ -183,6 +183,10 @@ RSpec.describe UsersController, type: :controller do
 
         it 'has recommendations' do
           expect(json_response['recommendations']).to_not be_nil
+        end
+
+        it 'has only one recommendation' do
+          expect(json_response['recommendations'].count).to eq(1)
         end
 
         it 'belongs to the same trip' do
