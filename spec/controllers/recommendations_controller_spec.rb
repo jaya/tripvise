@@ -13,8 +13,8 @@ RSpec.describe RecommendationsController, type: :controller do
       let(:user) { create(:user) }
       let(:recommendation) { attributes_for(:recommendation_json) }
 
-      it 'responds with 200' do
-        expect(response).to have_http_status :ok
+      it 'responds with 204' do
+        expect(response).to have_http_status :no_content
       end
 
       it 'creates a recommendation' do

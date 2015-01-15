@@ -5,11 +5,7 @@ class RecommendationsController < ApplicationController
     recommendation = Recommendation.new(base_params)
     recommendation.place = Place.find_or_create_by(place_params)
 
-    if recommendation.save
-      render json: recommendation, status: :ok
-    else
-      render nothing: true, status: :bad_request
-    end
+    recommendation.save ? no_content : bad_request
   end
 
   private
