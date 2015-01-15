@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   before_action :set_params, only: [:send_email, :redeem]
   before_action :set_user, only: [:recommendation_requests, :my_recommendations]
+  before_action :set_trip, only: [:my_recommendations]
 
   def create
     user = User.find_or_initialize_by(email: params[:user][:email])
@@ -41,7 +42,7 @@ class UsersController < ApplicationController
   end
 
   def my_recommendations
-    render json: Recommendation.where(recommender: @user),
+    render json: Recommendation.where(recommender: @user, trip: @trip),
            root: 'recommendations',
            status: :ok
   end
@@ -59,6 +60,12 @@ class UsersController < ApplicationController
     return bad_request unless @code
 
     @trip = @code.trip
+  end
+
+  def set_trip
+    @trip = Trip.find_by(id: params[:trip_id])
+
+    return bad_request unless @trip
   end
 
   def set_user

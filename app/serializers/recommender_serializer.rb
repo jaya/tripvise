@@ -1,8 +1,11 @@
 class RecommenderSerializer < ActiveModel::Serializer
-  attributes :recommendations
+  attributes :recommendations, :user
 
   has_one :trip
-  has_one :user
+
+  def user
+    object.trip.user
+  end
 
   def recommendations
     Recommendation.where(trip: object.trip, recommender: object.user)
