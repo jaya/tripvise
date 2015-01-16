@@ -12,11 +12,11 @@ class TripSerializer < ActiveModel::Serializer
   end
 
   def wishlist_count
-    0
+    Recommendation.where(trip: object, wishlisted: true).count
   end
 
   def recommendation_count
-    0
+    Recommendation.where(trip: object).count
   end
 
   def created_at
