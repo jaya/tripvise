@@ -127,8 +127,6 @@ RSpec.describe UsersController, type: :controller do
     let(:json_response) { JSON.parse(response.body) }
 
     context 'with valid data' do
-      before do
-      end
       let(:user) { create(:user) }
       let(:create_recommender?) { true }
 
