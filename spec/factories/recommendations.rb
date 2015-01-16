@@ -10,6 +10,7 @@ FactoryGirl.define do
     factory :recommendation_json do
       place { attributes_for(:place) }
       recommender_id { create(:user).id }
+      trip_id { create(:trip).id }
     end
   end
 end

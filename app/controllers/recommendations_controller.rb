@@ -2,20 +2,24 @@ class RecommendationsController < ApplicationController
   before_filter :restrict_access
 
   def create
-    recommendation = Recommendation.new(recommendation_params)
+    recommendation = Recommendation.new(base_params)
+    recommendation.place = Place.find_or_create_by(place_params)
 
-    if recommendation.save
-      render json: recommendation, status: :ok
-    else
-      render nothing: true, status: :bad_request
-    end
+    recommendation.save ? no_content : bad_request
   end
 
   private
 
   def recommendation_params
-    params.require(:recommendation).permit(:id, :description, :wishlisted, :rating,
-                                           :recommender_id, :trip_id, :place_id)
+    params.require(:recommendation)
+  end
+
+  def base_params
+    recommendation_params.permit(:description, :rating, :recommender_id, :trip_id)
+  end
+
+  def place_params
+    recommendation_params.require(:place).permit(:city, :name)
   end
 
   def restrict_access
