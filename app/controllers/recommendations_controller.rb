@@ -13,7 +13,7 @@ class RecommendationsController < ApplicationController
 
     return bad_request unless recommendation
 
-    recommendation.wishlisted ^= true
+    recommendation.toggle(:wishlisted)
 
     recommendation.save ? no_content : bad_request
   end
