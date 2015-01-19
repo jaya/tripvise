@@ -3,20 +3,22 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   describe '#create' do
     before do
-      request.headers['Authorization'] = user[:fb_token]
-      post :create, format: :json, user: user
+      header(user_json[:fb_token])
+      post :create, format: :json, user: user_json
     end
     let(:json_response) { JSON.parse(response.body) }
 
     context 'with valid data' do
-      let(:user) { attributes_for(:user) }
+      let(:user_json) { attributes_for(:user) }
 
       it 'responds with 200' do
         expect(response).to have_http_status :ok
       end
 
       it 'creates a user' do
-        expect(User.all).to_not be_empty
+        expect do
+          post :create, user: attributes_for(:user_recommender)
+        end.to change(User, :count).by(1)
       end
 
       it 'has a profile profile_picture' do
@@ -25,10 +27,10 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context 'with invalid data' do
-      let(:user) { attributes_for(:invalid_user) }
+      let(:user_json) { attributes_for(:invalid_user) }
 
-      it 'responds with 401' do
-        expect(response).to have_http_status :unauthorized
+      it 'responds with 400' do
+        expect(response).to have_http_status :bad_request
       end
 
       it 'doens\'t create a user' do
@@ -37,7 +39,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context 'with duplicated email' do
-      let(:user) { attributes_for(:user) }
+      let(:user_json) { attributes_for(:user) }
 
       it 'responds with 200' do
         expect(response).to have_http_status :ok
@@ -54,8 +56,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe '#send_email' do
     before do
-      token = 'Token token=' + user[:fb_token]
-      request.headers['Authorization'] = token
+      header(user[:fb_token])
       post :send_email, format: :json, id: user[:id],
                         trip_code: trip_code,
                         fb_ids: fb_ids
@@ -85,8 +86,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe '#redeem' do
     before do
-      token = 'Token token=' + user[:fb_token]
-      request.headers['Authorization'] = token
+      header(user[:fb_token])
       post :redeem, format: :json, id: user[:id],
                     trip_code: trip_code
     end
@@ -120,8 +120,7 @@ RSpec.describe UsersController, type: :controller do
           code: Code.find_by(trip: trip)
         )
       end
-      token = 'Token token=' + user[:fb_token]
-      request.headers['Authorization'] = token
+      header(user[:fb_token])
       get :recommendation_requests, format: :json, id: user[:id]
     end
     let(:json_response) { JSON.parse(response.body) }
@@ -166,8 +165,7 @@ RSpec.describe UsersController, type: :controller do
         create(:recommendation, recommender: user, trip: create(:trip, user: user))
       end
 
-      token = 'Token token=' + user[:fb_token]
-      request.headers['Authorization'] = token
+      header(user[:fb_token])
       get :my_recommendations, format: :json, id: user[:id],
                                trip_id: trip[:id]
     end

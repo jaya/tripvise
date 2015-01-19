@@ -23,11 +23,9 @@ FactoryGirl.define do
     end
 
     factory :invalid_user do
-      sequence(:id) { |n| n }
       name nil
       email nil
       fb_id nil
-      fb_token nil
     end
   end
 end

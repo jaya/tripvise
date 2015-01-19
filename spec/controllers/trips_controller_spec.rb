@@ -3,20 +3,15 @@ require 'rails_helper'
 RSpec.describe TripsController, type: :controller do
   describe '#index' do
     before do
-      user = User.find_by(id: user_id)
-      fb_token = user ? user.fb_token : nil
-      token = ActionController::HttpAuthentication::Token.encode_credentials(fb_token)
-      request.headers['HTTP_AUTHORIZATION'] = token
-      get :index, requester_id: user_id
+      create(:trip, user_id: user.id) if create_trip?
+      header(user[:fb_token])
+      get :index, requester_id: user[:id]
     end
     let(:trip_json) { JSON.parse(response.body) }
-    let(:user) { create(:user) }
 
     context 'with exising user' do
-      let(:user_id) do
-        trip = create(:trip, user_id: user.id)
-        trip.user_id
-      end
+      let(:user) { create(:user) }
+      let(:create_trip?) { true }
 
       it 'responds with 200' do
         expect(response).to have_http_status :ok
@@ -28,10 +23,8 @@ RSpec.describe TripsController, type: :controller do
     end
 
     context 'without existing user' do
-      let(:user_id) do
-        trip = create(:trip, user_id: 10_000)
-        trip.user_id
-      end
+      let(:user) { build(:user, id: 10_000, fb_token: 'ASDAS12312') }
+      let(:create_trip?) { false }
 
       it 'responds with 401' do
         expect(response).to have_http_status :unauthorized
@@ -41,13 +34,11 @@ RSpec.describe TripsController, type: :controller do
 
   describe '#create' do
     before do
-      fb_token = user ? user.fb_token : nil
-      token = ActionController::HttpAuthentication::Token.encode_credentials(fb_token)
-      request.headers['HTTP_AUTHORIZATION'] = token
+      header(user[:fb_token])
       post :create, format: :json, trip: trip_json
     end
     let(:trip) { Trip.first }
-    let(:user) { create(:user, email: 'jose@gmail.com') }
+    let(:user) { create(:user) }
 
     context 'with valid data' do
       let(:trip_json) { attributes_for(:trip_json, user_id: user.id) }
@@ -85,8 +76,7 @@ RSpec.describe TripsController, type: :controller do
     before do
       create(:recommendation, trip: trip) if create_recommendation?
 
-      token = 'Token token=' + user[:fb_token]
-      request.headers['HTTP_AUTHORIZATION'] = token
+      header(user[:fb_token])
       get :recommendations, format: :json, id: trip[:id]
     end
     let(:json_response) { JSON.parse(response.body) }
