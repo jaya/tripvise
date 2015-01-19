@@ -23,6 +23,16 @@ class TripsController < ApplicationController
     end
   end
 
+  def recommendations
+    trip = Trip.find_by(id: params[:id])
+
+    return bad_request unless trip
+
+    render json: Recommendation.where(trip: trip),
+           root: 'recommendations',
+           status: :ok
+  end
+
   private
 
   def trip_params
