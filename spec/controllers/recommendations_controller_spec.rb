@@ -6,7 +6,6 @@ RSpec.describe RecommendationsController, type: :controller do
       header(user[:fb_token])
       post :create, format: :json, recommendation: recommendation
     end
-    let(:json_response) { JSON.parse(response.body) }
 
     context 'with valid data' do
       let(:user) { create(:user) }

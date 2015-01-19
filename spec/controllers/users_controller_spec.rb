@@ -6,7 +6,7 @@ RSpec.describe UsersController, type: :controller do
       header(user_json[:fb_token])
       post :create, format: :json, user: user_json
     end
-    let(:json_response) { JSON.parse(response.body) }
+    let(:json) { JSON.parse(response.body) }
 
     context 'with valid data' do
       let(:user_json) { attributes_for(:user) }
@@ -22,7 +22,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       it 'has a profile profile_picture' do
-        expect(json_response['user']['profile_picture']).to_not be_nil
+        expect(json['user']['profile_picture']).to_not be_nil
       end
     end
 
@@ -61,7 +61,6 @@ RSpec.describe UsersController, type: :controller do
                         trip_code: trip_code,
                         fb_ids: fb_ids
     end
-    let(:json_response) { JSON.parse(response.body) }
 
     context 'with valid data' do
       let(:user) { create(:user) }
@@ -123,7 +122,6 @@ RSpec.describe UsersController, type: :controller do
       header(user[:fb_token])
       get :recommendation_requests, format: :json, id: user[:id]
     end
-    let(:json_response) { JSON.parse(response.body) }
 
     context 'with valid data' do
       let(:user) { create(:user) }
@@ -135,15 +133,15 @@ RSpec.describe UsersController, type: :controller do
 
       context 'JSON response' do
         it 'has a list of objects' do
-          expect(json_response).to_not be_nil
+          expect(json).to_not be_nil
         end
 
         it 'has an associated user' do
-          expect(json_response['recommendation_requests'].first['user']).to_not be_nil
+          expect(json['recommendation_requests'].first['user']).to_not be_nil
         end
 
         it 'has an associated trip' do
-          expect(json_response['recommendation_requests'].first['trip']).to_not be_nil
+          expect(json['recommendation_requests'].first['trip']).to_not be_nil
         end
       end
     end
@@ -169,7 +167,6 @@ RSpec.describe UsersController, type: :controller do
       get :my_recommendations, format: :json, id: user[:id],
                                trip_id: trip[:id]
     end
-    let(:json_response) { JSON.parse(response.body) }
 
     context 'with valid data' do
       let(:user) { create(:user) }
@@ -182,19 +179,19 @@ RSpec.describe UsersController, type: :controller do
 
       context 'JSON response' do
         it 'has a list of objects' do
-          expect(json_response).to_not be_nil
+          expect(json).to_not be_nil
         end
 
         it 'has recommendations' do
-          expect(json_response['recommendations']).to_not be_nil
+          expect(json['recommendations']).to_not be_nil
         end
 
         it 'has only one recommendation' do
-          expect(json_response['recommendations'].count).to eq(1)
+          expect(json['recommendations'].count).to eq(1)
         end
 
         it 'belongs to the same trip' do
-          json_response['recommendations'].each do |recommendation|
+          json['recommendations'].each do |recommendation|
             expect(recommendation['trip_id']).to eq(trip.id)
           end
         end

@@ -7,7 +7,6 @@ RSpec.describe TripsController, type: :controller do
       header(user[:fb_token])
       get :index, requester_id: user[:id]
     end
-    let(:trip_json) { JSON.parse(response.body) }
 
     context 'with exising user' do
       let(:user) { create(:user) }
@@ -18,7 +17,7 @@ RSpec.describe TripsController, type: :controller do
       end
 
       it 'returns all trips from requester' do
-        expect(trip_json['trips']).to_not be_empty
+        expect(json['trips']).to_not be_empty
       end
     end
 
@@ -35,13 +34,13 @@ RSpec.describe TripsController, type: :controller do
   describe '#create' do
     before do
       header(user[:fb_token])
-      post :create, format: :json, trip: trip_json
+      post :create, format: :json, trip: json
     end
     let(:trip) { Trip.first }
     let(:user) { create(:user) }
 
     context 'with valid data' do
-      let(:trip_json) { attributes_for(:trip_json, user_id: user.id) }
+      let(:json) { attributes_for(:trip_json, user_id: user.id) }
 
       it 'responds with 200' do
         expect(response).to have_http_status :ok
@@ -61,7 +60,7 @@ RSpec.describe TripsController, type: :controller do
     end
 
     context 'with invalid data' do
-      let(:trip_json) do
+      let(:json) do
         attributes_for(:invalid_trip, destination: attributes_for(:destination),
                                       recommendation_type: attributes_for(:recommendation_type))
       end
@@ -79,7 +78,6 @@ RSpec.describe TripsController, type: :controller do
       header(user[:fb_token])
       get :recommendations, format: :json, id: trip[:id]
     end
-    let(:json_response) { JSON.parse(response.body) }
 
     context 'with valid data' do
       let(:user) { create(:user) }
@@ -92,11 +90,11 @@ RSpec.describe TripsController, type: :controller do
 
       describe 'JSON response' do
         it 'has objects' do
-          expect(json_response).to_not be_nil
+          expect(json).to_not be_nil
         end
 
         it 'has recommendations' do
-          expect(json_response['recommendations'].count).to be > 0
+          expect(json['recommendations'].count).to be > 0
         end
       end
     end
