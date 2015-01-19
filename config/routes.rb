@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   get '/users/:id/recommendation_requests', to: 'users#recommendation_requests'
   get '/users/:id/recommendations', to: 'users#my_recommendations'
   get '/trips/:id/recommendations', to: 'trips#recommendations'
+  post '/recommendations/:id/wishlist', to: 'recommendations#wishlist'
 end
