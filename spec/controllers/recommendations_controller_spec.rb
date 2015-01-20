@@ -3,11 +3,9 @@ require 'rails_helper'
 RSpec.describe RecommendationsController, type: :controller do
   describe '#create' do
     before do
-      token = 'Token token=' + user[:fb_token]
-      request.headers['Authorization'] = token
+      header(token: user[:fb_token])
       post :create, format: :json, recommendation: recommendation
     end
-    let(:json_response) { JSON.parse(response.body) }
 
     context 'with valid data' do
       let(:user) { create(:user) }
