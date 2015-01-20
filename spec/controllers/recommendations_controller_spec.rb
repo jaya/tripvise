@@ -40,7 +40,7 @@ RSpec.describe RecommendationsController, type: :controller do
 
   describe '#wishlist' do
     before do
-      header(user[:fb_token])
+      header(token: user[:fb_token])
       post :wishlist, format: :json, id: recommendation[:id]
     end
 
