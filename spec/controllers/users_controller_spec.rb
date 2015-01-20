@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   describe '#create' do
     before do
-      header(user_json[:fb_token])
+      header(token: user_json[:fb_token])
       post :create, format: :json, user: user_json
     end
     let(:json) { JSON.parse(response.body) }
@@ -56,7 +56,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe '#send_email' do
     before do
-      header(user[:fb_token])
+      header(token: user[:fb_token])
       post :send_email, format: :json, id: user[:id],
                         trip_code: trip_code,
                         fb_ids: fb_ids
@@ -85,7 +85,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe '#redeem' do
     before do
-      header(user[:fb_token])
+      header(token: user[:fb_token])
       post :redeem, format: :json, id: user[:id],
                     trip_code: trip_code
     end
@@ -119,7 +119,7 @@ RSpec.describe UsersController, type: :controller do
           code: Code.find_by(trip: trip)
         )
       end
-      header(user[:fb_token])
+      header(token: user[:fb_token])
       get :recommendation_requests, format: :json, id: user[:id]
     end
 
@@ -163,7 +163,7 @@ RSpec.describe UsersController, type: :controller do
         create(:recommendation, recommender: user, trip: create(:trip, user: user))
       end
 
-      header(user[:fb_token])
+      header(token: user[:fb_token])
       get :my_recommendations, format: :json, id: user[:id],
                                trip_id: trip[:id]
     end

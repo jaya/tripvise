@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe RecommendationsController, type: :controller do
   describe '#create' do
     before do
-      header(user[:fb_token])
+      header(token: user[:fb_token])
       post :create, format: :json, recommendation: recommendation
     end
 

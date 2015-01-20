@@ -4,7 +4,7 @@ RSpec.describe TripsController, type: :controller do
   describe '#index' do
     before do
       create(:trip, user_id: user.id) if create_trip?
-      header(user[:fb_token])
+      header(token: user[:fb_token])
       get :index, requester_id: user[:id]
     end
 
@@ -33,7 +33,7 @@ RSpec.describe TripsController, type: :controller do
 
   describe '#create' do
     before do
-      header(user[:fb_token])
+      header(token: user[:fb_token])
       post :create, format: :json, trip: json
     end
     let(:trip) { Trip.first }
@@ -75,7 +75,7 @@ RSpec.describe TripsController, type: :controller do
     before do
       create(:recommendation, trip: trip) if create_recommendation?
 
-      header(user[:fb_token])
+      header(token: user[:fb_token])
       get :recommendations, format: :json, id: trip[:id]
     end
 
