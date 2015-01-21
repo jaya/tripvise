@@ -8,6 +8,16 @@ class RecommendationsController < ApplicationController
     recommendation.save ? no_content : bad_request
   end
 
+  def wishlist
+    recommendation = Recommendation.find_by(id: params[:id])
+
+    return bad_request unless recommendation
+
+    recommendation.toggle(:wishlisted)
+
+    recommendation.save ? no_content : bad_request
+  end
+
   private
 
   def recommendation_params

@@ -3,32 +3,34 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   describe '#create' do
     before do
-      request.headers['Authorization'] = user[:fb_token]
-      post :create, format: :json, user: user
+      header(token: user_json[:fb_token])
+      post :create, format: :json, user: user_json
     end
-    let(:json_response) { JSON.parse(response.body) }
+    let(:json) { JSON.parse(response.body) }
 
     context 'with valid data' do
-      let(:user) { attributes_for(:user) }
+      let(:user_json) { attributes_for(:user) }
 
       it 'responds with 200' do
         expect(response).to have_http_status :ok
       end
 
       it 'creates a user' do
-        expect(User.all).to_not be_empty
+        expect do
+          post :create, user: attributes_for(:user_recommender)
+        end.to change(User, :count).by(1)
       end
 
       it 'has a profile profile_picture' do
-        expect(json_response['user']['profile_picture']).to_not be_nil
+        expect(json['user']['profile_picture']).to_not be_nil
       end
     end
 
     context 'with invalid data' do
-      let(:user) { attributes_for(:invalid_user) }
+      let(:user_json) { attributes_for(:invalid_user) }
 
-      it 'responds with 401' do
-        expect(response).to have_http_status :unauthorized
+      it 'responds with 400' do
+        expect(response).to have_http_status :bad_request
       end
 
       it 'doens\'t create a user' do
@@ -37,7 +39,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context 'with duplicated email' do
-      let(:user) { attributes_for(:user) }
+      let(:user_json) { attributes_for(:user) }
 
       it 'responds with 200' do
         expect(response).to have_http_status :ok
@@ -54,13 +56,11 @@ RSpec.describe UsersController, type: :controller do
 
   describe '#send_email' do
     before do
-      token = 'Token token=' + user[:fb_token]
-      request.headers['Authorization'] = token
+      header(token: user[:fb_token])
       post :send_email, format: :json, id: user[:id],
                         trip_code: trip_code,
                         fb_ids: fb_ids
     end
-    let(:json_response) { JSON.parse(response.body) }
 
     context 'with valid data' do
       let(:user) { create(:user) }
@@ -85,8 +85,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe '#redeem' do
     before do
-      token = 'Token token=' + user[:fb_token]
-      request.headers['Authorization'] = token
+      header(token: user[:fb_token])
       post :redeem, format: :json, id: user[:id],
                     trip_code: trip_code
     end
@@ -120,11 +119,9 @@ RSpec.describe UsersController, type: :controller do
           code: Code.find_by(trip: trip)
         )
       end
-      token = 'Token token=' + user[:fb_token]
-      request.headers['Authorization'] = token
+      header(token: user[:fb_token])
       get :recommendation_requests, format: :json, id: user[:id]
     end
-    let(:json_response) { JSON.parse(response.body) }
 
     context 'with valid data' do
       let(:user) { create(:user) }
@@ -136,15 +133,15 @@ RSpec.describe UsersController, type: :controller do
 
       context 'JSON response' do
         it 'has a list of objects' do
-          expect(json_response).to_not be_nil
+          expect(json).to_not be_nil
         end
 
         it 'has an associated user' do
-          expect(json_response['recommendation_requests'].first['user']).to_not be_nil
+          expect(json['recommendation_requests'].first['user']).to_not be_nil
         end
 
         it 'has an associated trip' do
-          expect(json_response['recommendation_requests'].first['trip']).to_not be_nil
+          expect(json['recommendation_requests'].first['trip']).to_not be_nil
         end
       end
     end
@@ -166,12 +163,10 @@ RSpec.describe UsersController, type: :controller do
         create(:recommendation, recommender: user, trip: create(:trip, user: user))
       end
 
-      token = 'Token token=' + user[:fb_token]
-      request.headers['Authorization'] = token
+      header(token: user[:fb_token])
       get :my_recommendations, format: :json, id: user[:id],
                                trip_id: trip[:id]
     end
-    let(:json_response) { JSON.parse(response.body) }
 
     context 'with valid data' do
       let(:user) { create(:user) }
@@ -184,27 +179,27 @@ RSpec.describe UsersController, type: :controller do
 
       context 'JSON response' do
         it 'has a list of objects' do
-          expect(json_response).to_not be_nil
+          expect(json).to_not be_nil
         end
 
         it 'has a user' do
-          expect(json_response['recommendations'].first['user']).to_not be_nil
+          expect(json['recommendations'].first['user']).to_not be_nil
         end
 
         it 'has a trip' do
-          expect(json_response['recommendations'].first['trip']).to_not be_nil
+          expect(json['recommendations'].first['trip']).to_not be_nil
         end
 
         it 'has recommendations' do
-          expect(json_response['recommendations']).to_not be_nil
+          expect(json['recommendations']).to_not be_nil
         end
 
         it 'has only one recommendation' do
-          expect(json_response['recommendations'].count).to eq(1)
+          expect(json['recommendations'].count).to eq(1)
         end
 
         it 'belongs to the same trip' do
-          json_response['recommendations'].each do |recommendation|
+          json['recommendations'].each do |recommendation|
             expect(recommendation['trip']['id']).to eq(trip.id)
           end
         end
