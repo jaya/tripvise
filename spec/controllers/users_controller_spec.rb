@@ -190,6 +190,10 @@ RSpec.describe UsersController, type: :controller do
           expect(json['recommendations'].first['trip']).to_not be_nil
         end
 
+        it 'has a place' do
+          expect(json['recommendations'].first['place']).to_not be_nil
+        end
+
         it 'has recommendations' do
           expect(json['recommendations']).to_not be_nil
         end
