@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :recommendation do
+    sequence(:id) { |n| n }
     recommender_id { create(:user).id }
     place { build(:place) }
     trip
