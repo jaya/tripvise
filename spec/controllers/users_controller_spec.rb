@@ -182,6 +182,18 @@ RSpec.describe UsersController, type: :controller do
           expect(json).to_not be_nil
         end
 
+        it 'has a user' do
+          expect(json['recommendations'].first['user']).to_not be_nil
+        end
+
+        it 'has a trip' do
+          expect(json['recommendations'].first['trip']).to_not be_nil
+        end
+
+        it 'has a place' do
+          expect(json['recommendations'].first['place']).to_not be_nil
+        end
+
         it 'has recommendations' do
           expect(json['recommendations']).to_not be_nil
         end
@@ -192,7 +204,7 @@ RSpec.describe UsersController, type: :controller do
 
         it 'belongs to the same trip' do
           json['recommendations'].each do |recommendation|
-            expect(recommendation['trip_id']).to eq(trip.id)
+            expect(recommendation['trip']['id']).to eq(trip.id)
           end
         end
       end

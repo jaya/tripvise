@@ -1,3 +1,7 @@
 class RecommendationSerializer < ActiveModel::Serializer
-  attributes :id, :recommender_id, :place_id, :trip_id, :description, :wishlisted, :rating
+  attributes :id, :description, :wishlisted, :rating
+
+  has_one :place
+  has_one :trip
+  has_one :recommender, root: :user
 end
