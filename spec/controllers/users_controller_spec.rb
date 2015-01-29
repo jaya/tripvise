@@ -207,6 +207,14 @@ RSpec.describe UsersController, type: :controller do
             expect(recommendation['trip']['id']).to eq(trip.id)
           end
         end
+
+        it 'has an expedia link' do
+          expect(json['recommendations'].first['expedia_url']).to_not be_nil
+        end
+
+        it 'has a tripadvisor link' do
+          expect(json['recommendations'].first['tripadvisor_url']).to_not be_nil
+        end
       end
     end
 
