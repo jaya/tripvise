@@ -215,6 +215,10 @@ RSpec.describe UsersController, type: :controller do
         it 'has a tripadvisor link' do
           expect(json['recommendations'].first['tripadvisor_url']).to_not be_nil
         end
+
+        it 'has a recommendation_type' do
+          expect(json['recommendations'].first['recommendation_type']).to_not be_nil
+        end
       end
     end
 
