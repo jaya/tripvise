@@ -143,6 +143,10 @@ RSpec.describe UsersController, type: :controller do
         it 'has an associated trip' do
           expect(json['recommendation_requests'].first['trip']).to_not be_nil
         end
+
+        it 'has a recommendation_type' do
+          expect(json['recommendation_requests'].first['trip']['recommendation_type']).to_not be_nil
+        end
       end
     end
 
