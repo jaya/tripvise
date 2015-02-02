@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150115160426) do
+ActiveRecord::Schema.define(version: 20150202174239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,8 @@ ActiveRecord::Schema.define(version: 20150115160426) do
     t.string   "rating"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "place_type"
+    t.string   "google_places_url"
   end
 
   create_table "recommenders", force: true do |t|
