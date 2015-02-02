@@ -8,6 +8,7 @@ FactoryGirl.define do
     wishlisted true
     rating 'top'
     place_type 'attraction'
+    google_places_url 'www.google.com'
 
     factory :recommendation_json do
       place { attributes_for(:place) }

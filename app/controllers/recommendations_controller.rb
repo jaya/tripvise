@@ -26,7 +26,8 @@ class RecommendationsController < ApplicationController
 
   def base_params
     recommendation_params.permit(:description, :rating,
-                                 :recommender_id, :trip_id, :place_type)
+                                 :recommender_id, :trip_id,
+                                 :place_type, :google_places_url)
   end
 
   def place_params
