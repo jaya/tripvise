@@ -3,5 +3,5 @@ class Recommendation < ActiveRecord::Base
   belongs_to :place
   belongs_to :trip
 
-  validates_presence_of :description
+  validates_presence_of :description, :place_type
 end

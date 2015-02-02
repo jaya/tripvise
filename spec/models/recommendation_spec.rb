@@ -15,5 +15,6 @@ RSpec.describe Recommendation, type: :model do
 
   context 'with invalid data' do
     it { expect(build(:recommendation, description: nil)).to validate_presence_of(:description) }
+    it { expect(build(:recommendation, place_type: nil)).to validate_presence_of(:place_type) }
   end
 end
