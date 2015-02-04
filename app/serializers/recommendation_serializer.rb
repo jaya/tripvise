@@ -1,6 +1,6 @@
 class RecommendationSerializer < ActiveModel::Serializer
   attributes :id, :description, :wishlisted, :rating, :expedia_url,
-             :tripadvisor_url, :recommendation_type
+             :tripadvisor_url, :recommendation_type, :google_places_url
 
   has_one :place
   has_one :trip
