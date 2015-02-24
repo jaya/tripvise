@@ -5,7 +5,13 @@ class RecommendationsController < ApplicationController
     recommendation = Recommendation.new(base_params)
     recommendation.place = Place.find_or_create_by(place_params)
 
-    recommendation.save ? no_content : bad_request
+    if recommendation.save
+      send_email
+
+      no_content
+    else
+      bad_request
+    end
   end
 
   def wishlist
@@ -19,6 +25,12 @@ class RecommendationsController < ApplicationController
   end
 
   private
+
+  def send_email
+    trip = Trip.find_by(id: params[:recommendation][:trip_id])
+    recommender = User.find_by(id: params[:recommendation][:recommender_id])
+    RecommendationMailer.notify(recommender, trip.user, trip)
+  end
 
   def recommendation_params
     params.require(:recommendation)
