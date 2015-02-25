@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get '/users/:id/recommendations', to: 'users#my_recommendations'
   get '/trips/:id/recommendations', to: 'trips#recommendations'
   post '/recommendations/:id/wishlist', to: 'recommendations#wishlist'
+  put '/trips/:id/update_picture', to: 'trips#update_destination_picture'
 end
