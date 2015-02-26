@@ -14,7 +14,7 @@ class Code < ActiveRecord::Base
 
   def generate_code
     self.code = loop do
-      random_token = SecureRandom.hex.upcase[0..5]
+      random_token = SecureRandom.random_number.to_s.split(//).last(6).join
       break random_token unless Code.exists?(code: random_token)
     end
   end
