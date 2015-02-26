@@ -5,6 +5,14 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:recommendation_requests, :my_recommendations]
   before_action :set_trip, only: [:my_recommendations]
 
+  def index
+    code = Code.find_by(code: params[:trip_code])
+
+    return bad_request unless code
+
+    render json: code.trip.user, status: :ok
+  end
+
   def create
     user = User.find_or_initialize_by(email: params[:user][:email])
 
