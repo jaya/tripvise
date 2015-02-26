@@ -33,6 +33,20 @@ class TripsController < ApplicationController
            status: :ok
   end
 
+  def update_destination_picture
+    trip = Trip.find_by(id: params[:id])
+
+    return bad_request unless trip
+
+    trip.destination.update_picture
+
+    if trip.save
+      render json: trip, status: :ok
+    else
+      bad_request
+    end
+  end
+
   private
 
   def trip_params
