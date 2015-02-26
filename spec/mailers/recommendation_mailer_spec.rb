@@ -1,14 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe UserMailer, type: :mailer do
+RSpec.describe RecommendationMailer, type: :mailer do
   before do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
-    @sender = create(:user)
-    @users = [create(:user_recommender)]
+    @sender = create(:user_recommender)
+    @user = create(:user)
+    @recommendation = create(:recommendation, recommender: @sender)
     @trip = create(:trip)
-    UserMailer.recommendations(@sender, @users, @trip).deliver
+    RecommendationMailer.notify(@sender, @user, @trip).deliver
   end
 
   it 'should send an email' do
@@ -20,8 +21,8 @@ RSpec.describe UserMailer, type: :mailer do
   end
 
   it 'sets the subject to the correct subject' do
-    expect(ActionMailer::Base.deliveries.first.subject).to eq('Angelina Jolie ' \
-                                                              'wants your recommendation!')
+    expect(ActionMailer::Base.deliveries.first.subject).to eq('Will Smith ' \
+                                                              'made a recommendation for you!')
   end
 
   it 'renders the sender email' do
