@@ -25,6 +25,6 @@ RSpec.describe UserMailer, type: :mailer do
   end
 
   it 'renders the sender email' do
-    expect(ActionMailer::Base.deliveries.first.from).to eq(['notify@tripvise.com'])
+    expect(ActionMailer::Base.deliveries.first.from).to eq(['notifications@tripvise.me'])
   end
 end
