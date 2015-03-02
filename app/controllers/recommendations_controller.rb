@@ -29,7 +29,7 @@ class RecommendationsController < ApplicationController
   def send_email
     trip = Trip.find_by(id: params[:recommendation][:trip_id])
     recommender = User.find_by(id: params[:recommendation][:recommender_id])
-    RecommendationMailer.notify(recommender, trip.user, trip)
+    RecommendationMailer.notify(recommender, trip.user, trip).deliver
   end
 
   def recommendation_params
