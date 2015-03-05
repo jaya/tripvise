@@ -145,6 +145,7 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    libv8 (3.16.14.7)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -214,6 +215,7 @@ GEM
       activesupport (>= 3.0)
       i18n
       polyamorous (~> 1.1)
+    ref (1.0.5)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
     rspec-core (3.1.7)
@@ -265,6 +267,9 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
@@ -290,6 +295,7 @@ DEPENDENCIES
   active_model_serializers
   activeadmin!
   codeclimate-test-reporter
+  coffee-rails
   factory_girl_rails
   faker
   figaro (= 1.0.0.rc1)
@@ -302,9 +308,11 @@ DEPENDENCIES
   rails (= 4.1.4)
   rspec-rails
   rubocop
+  sass-rails
   shoulda-matchers
   simplecov
   spring
+  therubyracer
   uglifier
   vcr
   webmock
