@@ -4,6 +4,8 @@ gem 'rails', '4.1.4'
 
 gem 'spring', group: :development
 
+gem 'rails_12factor', group: :production
+
 gem 'pg'
 
 gem 'active_model_serializers'
