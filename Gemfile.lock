@@ -273,6 +273,9 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uglifier (2.5.3)
+      execjs (>= 0.3.0)
+      json (>= 1.8.0)
     unicode_utils (1.4.0)
     vcr (2.9.3)
     webmock (1.20.4)
@@ -302,5 +305,6 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   spring
+  uglifier
   vcr
   webmock
