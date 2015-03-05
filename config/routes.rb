@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
   resources :recommendations, except: [:new, :edit]
   resources :trips, except: [:new, :edit]
   resources :users, except: [:new, :edit]
