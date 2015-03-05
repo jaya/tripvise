@@ -18,12 +18,10 @@ gem 'codeclimate-test-reporter', group: :test, require: nil
 
 gem 'activeadmin', github: 'activeadmin'
 
-group :assets do
-  gem 'therubyracer'
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
-end
+gem 'therubyracer'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier'
 
 group :development do
   gem 'rubocop', require: false
