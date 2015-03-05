@@ -1,4 +1,4 @@
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::Base
   include ActionController::Serialization
   include ActionController::HttpAuthentication::Token::ControllerMethods
 

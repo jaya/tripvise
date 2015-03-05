@@ -11,6 +11,8 @@ class Destination < ActiveRecord::Base
   private
 
   def add_picture
+    return unless picture.blank?
+
     @suckr ||= ImageSuckr::GoogleSuckr.new
     query = full_qualified_name + ' wallpaper'
 
