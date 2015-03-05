@@ -4,9 +4,15 @@ class Destination < ActiveRecord::Base
   has_many :trips
   validates_presence_of :city, :state, :country, :full_qualified_name
 
+  def update_picture
+    add_picture
+  end
+
   private
 
   def add_picture
+    return unless picture.blank?
+
     @suckr ||= ImageSuckr::GoogleSuckr.new
     query = full_qualified_name + ' wallpaper'
 

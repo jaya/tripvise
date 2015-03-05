@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: 'notify@tripvise.com'
+  default from: 'Tripvise <notifications@tripvise.me>'
 
   def recommendations(sender, users, trip)
     users.each do |user|

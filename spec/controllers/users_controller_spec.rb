@@ -1,6 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  describe '#show' do
+    before do
+      @user = create(:user)
+      header(token: @user.fb_token)
+      @trip = create(:trip)
+    end
+
+    context 'with valid data' do
+      it 'responds with 200' do
+        get :index, trip_code: @trip.code.code
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns the owner of the trip' do
+        get :index, trip_code: @trip.code.code
+      end
+    end
+
+    context 'with invalid data' do
+      it 'responds with 400' do
+        get :index, trip_code: 'INVALID'
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+  end
+
   describe '#create' do
     before do
       header(token: user_json[:fb_token])

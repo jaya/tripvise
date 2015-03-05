@@ -2,9 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.4'
 
-gem 'rails-api'
-
 gem 'spring', group: :development
+
+gem 'rails_12factor', group: :production
 
 gem 'pg'
 
@@ -18,6 +18,13 @@ gem 'newrelic_rpm'
 
 gem 'codeclimate-test-reporter', group: :test, require: nil
 
+gem 'activeadmin', github: 'activeadmin'
+
+gem 'therubyracer'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier'
+
 group :development do
   gem 'rubocop', require: false
   gem 'overcommit'
@@ -25,7 +32,6 @@ end
 
 group :test, :development do
   gem 'vcr'
-  gem 'webmock'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'pry-rails'
@@ -34,6 +40,8 @@ group :test, :development do
   gem 'jazz_hands', github: 'jkrmr/jazz_hands'
   gem 'simplecov', require: false
 end
+
+gem 'webmock', group: :test
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

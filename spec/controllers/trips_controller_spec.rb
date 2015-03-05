@@ -121,4 +121,27 @@ RSpec.describe TripsController, type: :controller do
       end
     end
   end
+
+  describe '#update_destination_picture' do
+    before do
+      user = create(:user)
+      header(token: user[:fb_token])
+      @trip = create(:trip)
+    end
+
+    context 'with valid data' do
+      it 'responds with 200' do
+        put :update_destination_picture,
+            format: :json, id: @trip
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    context 'with invalid data' do
+      it 'responds with 400' do
+        put :update_destination_picture, id: @trip.id + 1
+        expect(response).to have_http_status :bad_request
+      end
+    end
+  end
 end
