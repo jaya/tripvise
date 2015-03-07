@@ -1,0 +1,17 @@
+footer {
+  position: fixed;
+  bottom: 0rem;
+  left: 0;
+  right: 0;
+  height: 40px;
+  padding: 0.5rem 0;
+  background-color: #3A4850;
+  color: white;
+  text-align: center;
+
+  p {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
