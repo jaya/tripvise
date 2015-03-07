@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += %w( landing_page.css )
+Rails.application.config.assets.version = '1.0'
