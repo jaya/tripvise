@@ -2,8 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.4'
 
-gem 'spring', group: :development
-
 gem 'rails_12factor', group: :production
 
 gem 'pg'
@@ -16,32 +14,34 @@ gem 'figaro', '1.0.0.rc1'
 
 gem 'newrelic_rpm'
 
-gem 'codeclimate-test-reporter', group: :test, require: nil
-
 gem 'activeadmin', github: 'activeadmin'
 
-gem 'therubyracer'
-gem 'sass-rails'
-gem 'coffee-rails'
-gem 'uglifier'
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 5.0'
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+# Use CoffeeScript for .coffee assets and views
+gem 'coffee-rails', '~> 4.1.0'
+
+gem 'compass'
 
 group :development do
   gem 'rubocop', require: false
   gem 'overcommit'
+  gem 'jazz_hands', github: 'jkrmr/jazz_hands'
+  gem 'spring'
 end
 
-group :test, :development do
+group :test do
   gem 'vcr'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'pry-rails'
   gem 'shoulda-matchers'
   gem 'faker'
-  gem 'jazz_hands', github: 'jkrmr/jazz_hands'
   gem 'simplecov', require: false
+  gem 'webmock'
+  gem 'codeclimate-test-reporter', require: false
 end
-
-gem 'webmock', group: :test
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
