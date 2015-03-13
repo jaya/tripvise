@@ -8,10 +8,26 @@ footer {
   background-color: #3A4850;
   color: white;
   text-align: center;
+}
 
-  p {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+@media (min-width: 300px) {
+  footer {
+    p {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+    }
+  }
+}
+
+@media (min-width: 550px) {
+  footer {
+    p {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 15px;
+    }
   }
 }
