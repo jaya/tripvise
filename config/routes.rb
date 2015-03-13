@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   root 'landing_page#index'
 
+  get '/privacy-policy', to: 'landing_page#privacy_policy'
+
   resources :recommendations, except: [:new, :edit]
   resources :trips, except: [:new, :edit]
   resources :users, except: [:new, :edit]

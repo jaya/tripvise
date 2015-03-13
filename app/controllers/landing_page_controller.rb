@@ -3,4 +3,8 @@ class LandingPageController < ApplicationController
 
   def index
   end
+
+  def privacy_policy
+    render 'landing_page/privacy_policy'
+  end
 end

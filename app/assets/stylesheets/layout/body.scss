@@ -4,9 +4,14 @@ body {
 }
 
 body {
-  background: asset-url('background.png') center center no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%, auto;
+  background-image: asset-url('background.png');
   color: white;
   font-family: $font-raleway;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  background-size: cover;
+
+  background-color: #464646;
 }

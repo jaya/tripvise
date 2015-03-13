@@ -1,31 +1,86 @@
 .section {
   text-align: center;
+  padding: 2rem 0 7rem;
+}
 
+.logo-row {
+  margin-top: 20px;
+}
+
+.info {
+  margin-top: 20px;
+}
+
+/* Bigger than 550 */
+@media (min-width: 300px) {
   .logo {
-    max-height: 300px;
+    max-height: 400px;
     max-width: 280px;
   }
 
   .hero-heading {
-    text-shadow: 1px 1px black;
+    text-shadow: 1px 2px 2px rgba(0, 0, 0, 1);
+    color: rgb(255, 127,102);
+    font-size: 2.5rem;
   }
 
-  .info {
-    padding-top: 50px;
-  }
-
-  .phones {
+  .phone  {
     position: relative;
-    padding-top: 50px;
+    padding-top: 30px;
     padding-bottom: 50px;
 
     img {
-      height: 620px;
+      height: 500px;
     }
   }
+}
 
-  .description {
-    font-size: 20px;
-    text-shadow: 1px 1px black;
+/* Bigger than 550 */
+@media (min-width: 550px) {
+  .logo {
+    max-height: 500px;
+    max-width: 500px;
+  }
+
+  .hero-heading {
+    text-shadow: 1px 2px 2px rgba(0, 0, 0, 1);
+    color: rgb(255, 127,102);
+    font-size: 2.5rem;
+  }
+
+  .phone  {
+    position: relative;
+    padding-top: 30px;
+    padding-bottom: 50px;
+
+    img {
+      height: 500px;
+    }
   }
 }
+
+/* Bigger than 550 */
+@media (min-width: 1000px) {
+  .logo {
+    max-height: 500px;
+    max-width: 500px;
+  }
+
+  .hero-heading {
+    text-shadow: 1px 2px 2px rgba(0, 0, 0, 1);
+    color: rgb(255, 127,102);
+    font-size: 3.2rem;
+  }
+
+  .phone  {
+    position: relative;
+    padding-top: 30px;
+    padding-bottom: 50px;
+
+    img {
+      height: 550px;
+    }
+  }
+}
+
+
