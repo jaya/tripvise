@@ -1,5 +1,5 @@
 class RecommendationMailer < ActionMailer::Base
-  default from: 'Tripvise <notifications@tripvise.me>'
+  default from: 'Tripvise.me <notifications@tripvise.me>'
 
   def notify(sender, user, trip)
     @sender = sender
