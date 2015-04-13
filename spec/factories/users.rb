@@ -2,8 +2,8 @@ FactoryGirl.define do
   factory :user do
     sequence(:id) { |n| n }
     name 'Angelina Jolie'
-    fb_id 'ASD1231'
-    fb_token 'A312D1'
+    fb_id Faker::Lorem.characters(257)
+    fb_token Faker::Lorem.characters(257)
     email Faker::Internet.email
     profile_picture 'http://1.bp.blogspot.com/-D8sY8_vDGl4/T5KdkqmPg4I' \
                     '/AAAAAAAAAUI/b15_zkP-4nw/s1600/Kitten-Wallpaper-3.jpeg'
