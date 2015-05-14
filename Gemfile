@@ -25,6 +25,8 @@ gem 'coffee-rails', '~> 4.1.0'
 
 gem 'compass'
 
+gem 'raygun4ruby'
+
 group :development do
   gem 'rubocop', require: false
   gem 'overcommit'
