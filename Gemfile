@@ -27,10 +27,13 @@ gem 'compass'
 
 gem 'koala', '~> 2.0'
 
+group :development, :test do
+  gem 'jazz_hands', github: 'jkrmr/jazz_hands'
+end
+
 group :development do
   gem 'rubocop', require: false
   gem 'overcommit'
-  gem 'jazz_hands', github: 'jkrmr/jazz_hands'
   gem 'spring'
 end
 
