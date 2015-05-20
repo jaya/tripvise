@@ -18,6 +18,6 @@ class Recommender < ActiveRecord::Base
   end
 
   def self.user_fb_friend(current_user)
-    Koala::Facebook::API.new(current_user.fb_id).get_connections('me', 'friends')
+    Koala::Facebook::API.new(current_user.fb_token).get_connections('me', 'friends')
   end
 end
