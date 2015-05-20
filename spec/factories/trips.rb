@@ -7,6 +7,11 @@ FactoryGirl.define do
     private? true
     user
 
+    factory :not_private_trip do
+      private? false
+      user_id { create(:user, fb_id: '633177910141622').id }
+    end
+
     factory :trip_json do
       destination { attributes_for(:destination) }
       recommendation_type { attributes_for(:recommendation_type) }

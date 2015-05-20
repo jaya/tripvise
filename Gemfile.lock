@@ -126,6 +126,8 @@ GEM
       railties (>= 3.0.0)
     faker (1.4.3)
       i18n (~> 0.5)
+    faraday (0.9.1)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.6)
     figaro (1.0.0.rc1)
       rails (>= 3, < 5)
@@ -158,6 +160,10 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    koala (2.0.0)
+      addressable
+      faraday
+      multi_json
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -165,6 +171,7 @@ GEM
     mime-types (1.25.1)
     minitest (5.5.0)
     multi_json (1.10.1)
+    multipart-post (2.0.0)
     newrelic_rpm (3.9.9.275)
     overcommit (0.19.0)
       childprocess (>= 0.5.1)
@@ -318,6 +325,7 @@ DEPENDENCIES
   figaro (= 1.0.0.rc1)
   image_suckr
   jazz_hands!
+  koala (~> 2.0)
   newrelic_rpm
   overcommit
   pg

@@ -137,6 +137,9 @@ RSpec.describe UsersController, type: :controller do
 
   describe '#recommendation_requests' do
     before do
+      allow_any_instance_of(Koala::Facebook::API).to \
+        receive(:get_connections).and_return(fb_friends)
+
       if create_recommender?
         trip = create(:trip, user: create(:user_recommender))
         Recommender.create(
@@ -146,18 +149,24 @@ RSpec.describe UsersController, type: :controller do
         )
       end
       header(token: user[:fb_token])
-      get :recommendation_requests, format: :json, id: user[:id]
     end
+    let(:fb_user) { { 'name' => 'FB Friend', 'id' => '633177910141622' } }
+    let(:fb_friends) { [fb_user] }
 
     context 'with valid data' do
       let(:user) { create(:user) }
       let(:create_recommender?) { true }
 
       it 'responds with 200' do
+        get :recommendation_requests, format: :json, id: user[:id]
         expect(response).to have_http_status :ok
       end
 
       context 'JSON response' do
+        before do
+          get :recommendation_requests, format: :json, id: user[:id]
+        end
+
         it 'has a list of objects' do
           expect(json).to_not be_nil
         end
@@ -174,6 +183,44 @@ RSpec.describe UsersController, type: :controller do
           expect(json['recommendation_requests'].first['trip']['recommendation_type']).to_not be_nil
         end
       end
+
+      context 'when a additional recommenders needs to be created to a non private trip' do
+        before do
+          create(:not_private_trip)
+        end
+
+        it 'must have 2 recommenders in the response' do
+          get :recommendation_requests, format: :json, id: user[:id]
+          expect(json['recommendation_requests'].size).to eq 2
+        end
+      end
+
+      context 'when a friend has a private trip' do
+        before do
+          create(:trip, user: create(:user, fb_id: fb_user['id']))
+        end
+
+        it 'must have 1 recommender in the response' do
+          get :recommendation_requests, format: :json, id: user[:id]
+          expect(json['recommendation_requests'].size).to eq 1
+        end
+      end
+
+      context 'when the recommender is already created' do
+        before do
+          trip_from_friend = create(:not_private_trip)
+          Recommender.create(
+          trip: trip_from_friend,
+          user: user,
+          code: Code.find_by(trip: trip_from_friend)
+          )
+        end
+
+        it 'not duplicates the existing recommender' do
+          get :recommendation_requests, format: :json, id: user[:id]
+          expect(json['recommendation_requests'].size).to eq 2
+        end
+      end
     end
 
     context 'with invalid data' do
@@ -181,6 +228,7 @@ RSpec.describe UsersController, type: :controller do
       let(:create_recommender?) { false }
 
       it 'responds with 401' do
+        get :recommendation_requests, format: :json, id: user[:id]
         expect(response).to have_http_status :unauthorized
       end
     end
