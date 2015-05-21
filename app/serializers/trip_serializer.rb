@@ -3,7 +3,7 @@ class TripSerializer < ActiveModel::Serializer
 
   attributes :id, :start, :end,
              :wishlist_count, :recommendation_count,
-             :created_at, :trip_code, :recommendation_type
+             :created_at, :trip_code, :recommendation_type, :hidden
 
   has_one :destination
 
