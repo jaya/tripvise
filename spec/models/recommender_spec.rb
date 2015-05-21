@@ -20,20 +20,28 @@ RSpec.describe Recommender, type: :model do
   end
 
   describe '#recommend_as' do
+    let(:fb_friend) { { 'name' => 'FB Friend', 'id' => '633177910141622' } }
+    let(:fb_friends) { [fb_friend] }
+    let(:current_user) { create(:user) }
+    let(:recommender) { described_class.recommend_as(current_user).first }
+    let(:trip) { Trip.joins(:user).where(users: { fb_id: fb_friend['id'] }).first }
+
     before do
+      create(:not_private_trip)
       allow_any_instance_of(Koala::Facebook::API).to \
       receive(:get_connections).and_return(fb_friends)
-      @trip = create(:not_private_trip)
-      @current_user = create(:user)
     end
-    let(:fb_user) { { 'name' => 'FB Friend', 'id' => '633177910141622' } }
-    let(:fb_friends) { [fb_user] }
 
-    it 'creates a recommender to the Facebook friend' do
-      recommender = described_class.recommend_as(@current_user).first
-      expect(recommender.user.id).to eq @current_user.id
-      expect(recommender.trip.id).to eq @trip.id
-      expect(recommender.code.id).to eq @trip.code.id
+    it 'assigns the correct user to recommender' do
+      expect(recommender.user.id).to eq current_user.id
+    end
+
+    it 'assigns the correct trip to recommender' do
+      expect(recommender.trip.id).to eq trip.id
+    end
+
+    it 'assigns the correct trip code to recommender' do
+      expect(recommender.code.id).to eq trip.code.id
     end
   end
 end
