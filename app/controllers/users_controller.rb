@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   end
 
   def recommendation_requests
-    Recommender.create_recommenders_for_fb_friends_of(@user)
+    Recommender.recommend_as(@user)
 
     recommenders = Recommender.where(user: @user)
 

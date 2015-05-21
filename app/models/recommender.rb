@@ -5,8 +5,8 @@ class Recommender < ActiveRecord::Base
 
   validates_presence_of :trip_id, :user_id, :code_id
 
-  def self.create_recommenders_for_fb_friends_of(current_user)
-    fb_friends = user_fb_friend(current_user)
+  def self.recommend_as(current_user)
+    fb_friends = facebook_friends_for(current_user)
 
     trips = fb_friends.map do |fb_friend|
       Trip.joins(:user).where(users: { fb_id: fb_friend['id'] }, private?: false).load
@@ -17,7 +17,7 @@ class Recommender < ActiveRecord::Base
     end
   end
 
-  def self.user_fb_friend(current_user)
+  def self.facebook_friends_for(current_user)
     Koala::Facebook::API.new(current_user.fb_token).get_connections('me', 'friends')
   end
 end
