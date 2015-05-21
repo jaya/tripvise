@@ -16,8 +16,8 @@ RSpec.describe Trip, type: :model do
     it { expect(build(:trip, start: nil)).to validate_presence_of(:start) }
     it { expect(build(:trip, end: nil)).to validate_presence_of(:end) }
     it do
-      expect(build(:trip, private?: false)).to \
-      validate_inclusion_of(:private?).in_array([true, false])
+      expect(build(:trip, hidden: false)).to \
+      validate_inclusion_of(:hidden).in_array([true, false])
     end
 
     context 'when end date is greater than start date' do

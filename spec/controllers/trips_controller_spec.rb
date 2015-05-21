@@ -70,8 +70,8 @@ RSpec.describe TripsController, type: :controller do
       end
     end
 
-    context 'with private? false' do
-      let(:json) { attributes_for(:trip_json, user_id: user.id, private?: false) }
+    context 'with hidden false' do
+      let(:json) { attributes_for(:trip_json, user_id: user.id, hidden: false) }
 
       it 'responds with 200' do
         expect(response).to have_http_status :ok

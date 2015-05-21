@@ -54,7 +54,7 @@ class TripsController < ApplicationController
   end
 
   def base_params
-    trip_params.permit(:start, :end, :user_id, :private?)
+    trip_params.permit(:start, :end, :user_id, :hidden)
   end
 
   def destination_params

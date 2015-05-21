@@ -9,7 +9,7 @@ class Recommender < ActiveRecord::Base
     fb_friends = facebook_friends_for(current_user)
 
     trips = fb_friends.map do |fb_friend|
-      Trip.joins(:user).where(users: { fb_id: fb_friend['id'] }, private?: false).load
+      Trip.joins(:user).where(users: { fb_id: fb_friend['id'] }, hidden: false).load
     end.flatten
 
     trips.map do |trip|

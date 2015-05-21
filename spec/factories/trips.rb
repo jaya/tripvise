@@ -4,11 +4,11 @@ FactoryGirl.define do
     self.end '2014-12-14 12:33:28'
     destination { build(:destination) }
     recommendation_type { build(:recommendation_type) }
-    private? true
+    hidden true
     user
 
     factory :not_private_trip do
-      private? false
+      hidden false
       user_id { create(:user, fb_id: '633177910141622').id }
     end
 
