@@ -69,6 +69,14 @@ RSpec.describe TripsController, type: :controller do
         expect(response).to have_http_status :bad_request
       end
     end
+
+    context 'with hidden false' do
+      let(:json) { attributes_for(:trip_json, user_id: user.id, hidden: false) }
+
+      it 'responds with 200' do
+        expect(response).to have_http_status :ok
+      end
+    end
   end
 
   describe '#recommendations' do

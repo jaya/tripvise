@@ -10,6 +10,7 @@ class Trip < ActiveRecord::Base
 
   validates_presence_of :start, :end, :user_id
   validate :start_date_cannot_be_greater_than_end
+  validates :hidden, inclusion: { in: [true, false] }
 
   def start_date_cannot_be_greater_than_end
     errors.add(:start, "can't be in the past") if period_is_present? && start > self.end

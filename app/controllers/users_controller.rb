@@ -42,9 +42,11 @@ class UsersController < ApplicationController
   end
 
   def recommendation_requests
-    recommender = Recommender.where(user: @user)
+    Recommender.recommend_as(@user)
 
-    render json: recommender,
+    recommenders = Recommender.where(user: @user)
+
+    render json: recommenders,
            root: 'recommendation_requests',
            status: :ok
   end
