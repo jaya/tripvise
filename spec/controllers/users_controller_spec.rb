@@ -81,24 +81,42 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe '#send_email' do
-    before do
-      header(token: user[:fb_token])
-      post :send_email, format: :json, id: user[:id],
-                        trip_code: trip_code,
-                        fb_ids: fb_ids
-    end
-
     context 'with valid data' do
+      before do
+        header(token: user[:fb_token])
+        create(:recommender, trip_id: trip.id, code_id: code.id, user_id: user_recommender.id)
+        post :send_email, format: :json, id: user[:id],
+                          trip_code: trip_code,
+                          fb_ids: fb_ids
+      end
       let(:user) { create(:user) }
-      let(:trip_code) { create(:code).code }
-      let(:fb_ids) { [create(:user_recommender).fb_id] }
+      let(:code) { create(:code) }
+      let(:trip_code) { code.code }
+      let(:trip) { code.trip }
+      let(:user_recommender) { create(:user_recommender) }
+      let(:fb_ids) { [user_recommender.fb_id] }
+      let(:recommender) { Recommender.find_by(trip_id: trip.id) }
 
       it 'responds with 204' do
         expect(response).to have_http_status :no_content
       end
+
+      it 'does not duplicates the recommender' do
+        expect(Recommender.where(trip_id: trip.id).load.size).to eq 1
+      end
+
+      it { expect(recommender.user.id).to eq user_recommender.id }
+      it { expect(recommender.trip.id).to eq trip.id }
+      it { expect(recommender.code.id).to eq trip.code.id }
     end
 
     context 'with invalid data' do
+      before do
+        header(token: user[:fb_token])
+        post :send_email, format: :json, id: user[:id],
+                          trip_code: trip_code,
+                          fb_ids: fb_ids
+      end
       let(:user) { create(:user) }
       let(:trip_code) { 'INVALID' }
       let(:fb_ids) { nil }

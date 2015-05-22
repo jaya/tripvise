@@ -28,6 +28,10 @@ class UsersController < ApplicationController
   def send_email
     users = User.where(fb_id: params[:fb_ids])
 
+    users.each do |user|
+      Recommender.find_or_create_by(user: user, trip: @trip, code: @code)
+    end
+
     UserMailer.recommendations(@user, users, @trip).deliver
 
     no_content
