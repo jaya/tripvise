@@ -10,3 +10,6 @@ DuplicateMethodCall:
 FeatureEnvy:
   exclude:
   - change
+
+NilCheck:
+  enabled: false
