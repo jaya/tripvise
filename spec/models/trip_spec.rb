@@ -10,6 +10,14 @@ RSpec.describe Trip, type: :model do
 
   context 'with valid data' do
     it { expect(trip).to be_valid }
+
+    context 'and hidden true' do
+      it { expect(create(:trip, hidden: true).hidden).to eq true }
+    end
+
+    context 'and hidden false' do
+      it { expect(create(:trip, hidden: false).hidden).to eq false }
+    end
   end
 
   context 'with invalid data' do
@@ -24,6 +32,12 @@ RSpec.describe Trip, type: :model do
       it do
         trip.start = '2014-12-20 12:33:28'
         expect(trip).to_not be_valid
+      end
+    end
+
+    context 'and hidden nil' do
+      it 'assigns a default value to hidden' do
+        expect(create(:trip, hidden: nil).hidden).to eq true
       end
     end
   end

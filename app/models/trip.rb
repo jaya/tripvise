@@ -12,6 +12,8 @@ class Trip < ActiveRecord::Base
   validate :start_date_cannot_be_greater_than_end
   validates :hidden, inclusion: { in: [true, false] }
 
+  before_validation :default_values, on: :create
+
   def start_date_cannot_be_greater_than_end
     errors.add(:start, "can't be in the past") if period_is_present? && start > self.end
   end
@@ -24,5 +26,9 @@ class Trip < ActiveRecord::Base
 
   def period_is_present?
     start.present? && self.end.present?
+  end
+
+  def default_values
+    self.hidden = true if hidden.nil?
   end
 end

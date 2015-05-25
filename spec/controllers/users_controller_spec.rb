@@ -81,24 +81,72 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe '#send_email' do
+    let(:user) { create(:user) }
+
     before do
       header(token: user[:fb_token])
-      post :send_email, format: :json, id: user[:id],
-                        trip_code: trip_code,
-                        fb_ids: fb_ids
     end
 
-    context 'with valid data' do
-      let(:user) { create(:user) }
-      let(:trip_code) { create(:code).code }
-      let(:fb_ids) { [create(:user_recommender).fb_id] }
+    context 'with not invited friend' do
+      let(:trip_code) { create(:code) }
+      let(:friend) { create(:user) }
+      let(:recommender) do
+        Recommender.find_by(user: friend)
+      end
+
+      before do
+        post :send_email, format: :json, id: user[:id],
+                          trip_code: trip_code.code,
+                          fb_ids: [friend.fb_id]
+      end
 
       it 'responds with 204' do
         expect(response).to have_http_status :no_content
       end
+
+      it 'creates the recommender' do
+        expect(recommender).to_not be_nil
+      end
+
+      it 'creates for correct trip' do
+        expect(recommender.trip).to eq trip_code.trip
+      end
+
+      it 'creates for correct friend' do
+        expect(recommender.user).to eq friend
+      end
+
+      it 'creates for correct code' do
+        expect(recommender.code).to eq trip_code
+      end
+    end
+
+    context 'existing registered friend' do
+      let(:trip_code) { create(:code) }
+      let(:friend) { create(:user) }
+
+      before do
+        create(:recommender, trip_id: trip_code.trip.id, code_id: trip_code.id, user_id: friend.id)
+        post :send_email, format: :json, id: user[:id],
+                          trip_code: trip_code.code,
+                          fb_ids: [friend.fb_id]
+      end
+
+      it 'responds with 204' do
+        expect(response).to have_http_status :no_content
+      end
+
+      it 'does not duplicate the recommender' do
+        expect(Recommender.where(user: friend).count).to eq 1
+      end
     end
 
     context 'with invalid data' do
+      before do
+        post :send_email, format: :json, id: user[:id],
+                          trip_code: trip_code,
+                          fb_ids: fb_ids
+      end
       let(:user) { create(:user) }
       let(:trip_code) { 'INVALID' }
       let(:fb_ids) { nil }
