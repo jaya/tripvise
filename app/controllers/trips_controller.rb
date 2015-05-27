@@ -5,7 +5,7 @@ class TripsController < ApplicationController
     user = User.find_by(id: requester_params)
 
     if user
-      render json: Trip.where(user_id: user.id), status: :ok
+      render json: Trip.where(user_id: user.id).order(:id), status: :ok
     else
       render nothing: true, status: :bad_request
     end
